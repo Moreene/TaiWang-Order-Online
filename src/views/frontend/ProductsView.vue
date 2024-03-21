@@ -39,18 +39,23 @@
                             <div class="col-md-4 col-lg-3 mb-48" v-for="item in matchProducts" :key="item.id">
                                 <ProductsCardComponent :item="item"></ProductsCardComponent>
                             </div>
-                            <PaginationComponent :products="matchProducts" @update-products="updateProducts" ref="pagination"></PaginationComponent>
+                            <PaginationComponent :products="matchProducts" @update-products="updateProducts"
+                                ref="pagination"></PaginationComponent>
+                        </template>
+                        <template v-else-if="keyWord !== '' && !matchProducts.length">
+                            <p class="mb-0 fs-6 text-center">抱歉，沒有符合「 {{ keyWord }} 」的餐點唷！</p>
                         </template>
                         <template v-else>
                             <div class="col-md-4 col-lg-3 mb-48" v-for="item in sliceProducts" :key="item.id">
                                 <ProductsCardComponent :item="item"></ProductsCardComponent>
                             </div>
-                            <PaginationComponent :products="products" @update-products="updateProducts" ref="pagination"></PaginationComponent>
+                            <PaginationComponent :products="products" @update-products="updateProducts"
+                                ref="pagination"></PaginationComponent>
                         </template>
                     </div>
                 </div>
                 <!-- 其他餐點 -->
-                <RouterView :matchProducts="matchProducts"></RouterView>
+                <RouterView :match-products="matchProducts" :key-word="keyWord"></RouterView>
             </div>
         </div>
     </div>
@@ -93,7 +98,9 @@ export default {
         },
         goTo(path, e) {
             e.target.blur(); // 修改路由時，取消nav-link殘留的focus樣式
-            this.resetPagination();
+            if (this.$refs.pagination) {
+                this.resetPagination();
+            };
             if (path === 'products') {
                 this.keyWord = '';
                 this.matchProducts = [];

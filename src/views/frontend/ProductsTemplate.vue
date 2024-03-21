@@ -7,6 +7,9 @@
                 </div>
                 <PaginationComponent :products="matchProducts" @update-products="updateProducts"></PaginationComponent>
             </template>
+            <template v-else-if="keyWord !== '' && !matchProducts.length">
+                <p class="mb-0 fs-6 text-center">抱歉，沒有符合「 {{ keyWord }} 」的餐點唷！</p>
+            </template>
             <template v-else>
                 <div class="col-md-4 col-lg-3 mb-48" v-for="item in sliceProducts" :key="item.id">
                     <ProductsCardComponent :item="item"></ProductsCardComponent>
@@ -24,7 +27,7 @@ import ProductsCardComponent from '@/components/ProductsCardComponent.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 
 export default {
-    props: ['category', 'matchProducts'],
+    props: ['category', 'matchProducts', 'keyWord'],
     components: {
         ProductsCardComponent,
         PaginationComponent
