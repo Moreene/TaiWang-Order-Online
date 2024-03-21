@@ -32,7 +32,7 @@
                                     <label for="percent" class="form-label">優惠%數</label>
                                     <v-field id="percent" name="優惠%數" type="number" class="form-control"
                                         v-model.number="coupon.percent" :class="{ 'is-invalid': errors['優惠%數'] }"
-                                        placeholder="請輸入優惠%數" rules="required"></v-field>
+                                        placeholder="請輸入優惠%數" :rules="minPercent"></v-field>
                                     <error-message name="優惠%數" class="invalid-feedback"></error-message>
                                 </div>
                             </div>
@@ -88,6 +88,15 @@ export default {
         }
     },
     methods: {
+        minPercent(value) {
+            if (!value) {
+                return '優惠%數 為必填';
+            } else if (value < 1) {
+                return '優惠%數需大於 1 ';
+            } else {
+                return true;
+            };
+        },
         createUid() {
             const dateTime = this.date + ' ' + this.time
             this.uid = Date.parse(dateTime);
