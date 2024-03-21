@@ -42,7 +42,7 @@
                                     <label for="message" class="col-3 col-lg-2 col-form-label">備註：</label>
                                     <div class="col-9 col-lg-10">
                                         <input type="text" class="form-control-plaintext" id="message"
-                                            :value="order.user.message ? order.user.message : '無'" readonly>
+                                            :value="order.message ? order.message : '無'" readonly>
                                     </div>
                                 </div>
                             </div>
