@@ -5,18 +5,23 @@
                 <h2 class="d-inline-block bg-dark text-white text-center p-16">泰汪泰式料理</h2>
             </div>
             <h3 class="h4 text-center mb-16">後台登入</h3>
-            <div class="form-floating mb-16">
-                <input type="email" class="form-control" id="floatingInput" placeholder="xxx@mail.com"
-                    v-model="user.username">
-                <label for="floatingInput">帳號</label>
-            </div>
-            <div class="form-floating mb-32">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                    v-model="user.password">
-                <label for="floatingPassword">密碼</label>
-            </div>
-            <button type="button" class="btn btn-dark btn-lg w-100 mb-16" @click="login">登入</button>
-            <RouterLink to="/" class="btn btn-outline-gray btn-lg w-100">回到前台</RouterLink>
+            <v-form ref="form" v-slot="{ errors }" @submit="login">
+                <div class="form-floating mb-16">
+                    <v-field id="floatingInput" name="帳號" type="email" class="form-control" v-model="user.username"
+                        :class="{ 'is-invalid': errors['帳號'] }" placeholder="xxx@mail.com" rules="required"></v-field>
+                    <label for="floatingInput">帳號</label>
+                    <error-message name="帳號" class="invalid-feedback fw-bold"></error-message>
+                </div>
+                <div class="form-floating mb-32">
+                    <v-field id="floatingPassword" name="密碼" type="password" class="form-control"
+                        v-model="user.password" :class="{ 'is-invalid': errors['密碼'] }" placeholder="Password"
+                        rules="required"></v-field>
+                    <label for="floatingPassword">密碼</label>
+                    <error-message name="密碼" class="invalid-feedback fw-bold"></error-message>
+                </div>
+                <button type="submit" class="btn btn-dark btn-lg w-100 mb-16">登入</button>
+                <RouterLink to="/" class="btn btn-outline-gray btn-lg w-100">回到前台</RouterLink>
+            </v-form>
         </div>
     </div>
 </template>
@@ -42,13 +47,14 @@ export default {
         login() {
             axios.post(`${VITE_API}/admin/signin`, this.user)
                 .then(res => {
+                    this.$refs.form.resetForm();
                     const { token, expired } = res.data;
                     document.cookie = `myToken=${token}; expires=${new Date(expired)};`;
                     this.user = {
                         username: '',
                         password: '',
                     },
-                    toast('top', 'success', res.data.message);
+                        toast('top', 'success', res.data.message);
                     setTimeout(() => this.$router.push('/admin'), 1500);
                 })
                 .catch(err => {
