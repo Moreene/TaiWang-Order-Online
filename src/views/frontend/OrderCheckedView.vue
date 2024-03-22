@@ -2,7 +2,7 @@
     <div class="bg-wave">
         <div class="container">
             <div class="col-lg-10 mx-auto pb-72">
-                <ProgessBarComponent></ProgessBarComponent>
+                <ProgessBarComponent/>
                 <div class="bg-white border text-center p-32">
                     <h2 class="h1 mb-48 fw-bold">感謝您的訂購！</h2>
                     <h3 class="fs-3 position-relative order-info z-1 mb-20"><span

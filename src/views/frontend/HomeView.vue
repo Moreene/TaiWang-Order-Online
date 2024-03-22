@@ -1,5 +1,5 @@
 <template>
-    <LoadingComponent v-model:active="isLoading"></LoadingComponent>
+    <LoadingComponent v-model:active="isLoading"/>
     <!-- Banner -->
     <div class="banner bg-repeat-no bg-size-cover d-flex justify-content-center align-items-center">
         <div class="banner-box rounded-4 d-flex justify-content-center align-items-center">
@@ -20,7 +20,7 @@
     <div class="container">
         <div class="py-72">
             <h3 class="text-center fw-bold mb-16">暢銷餐點</h3>
-            <SwiperComponent :products="sellProducts" class="mb-48"></SwiperComponent>
+            <SwiperComponent :products="sellProducts" class="mb-48"/>
             <div class="text-center">
                 <RouterLink to="/categories/recommendation" class="btn btn-secondary link-light text-notoSans px-52 py-8">
                     查看更多</RouterLink>

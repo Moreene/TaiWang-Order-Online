@@ -18,7 +18,7 @@
                                 class="bi bi-envelope text-primary me-8"></i>taiwang@mail.com</a></p>
                     <p class="mb-48"><a href="tel:+886-2-2618-0123" class="link-dark"><i
                                 class="bi bi-telephone me-8"></i>02-2618-0123</a></p>
-                    <MapComponent></MapComponent>
+                    <MapComponent/>
                 </div>
                 <!-- 意見回饋 -->
                 <div class="col-md-6 col-lg-5" @mouseover="addTitleColor" @mouseout="removeTitleColor">

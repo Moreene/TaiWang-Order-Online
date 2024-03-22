@@ -72,11 +72,11 @@
         <!-- 分頁 -->
         <AdminPaginationComponent :pagination="pagination" @emit-pages="getProduct"></AdminPaginationComponent>
         <!-- 編輯圖片 -->
-        <ImagesModalComponent ref="imageModal" :temp-product="tempProduct" @clear-input="clearImgInput" @update="getProduct"></ImagesModalComponent>
+        <ImagesModalComponent ref="imageModal" :temp-product="tempProduct" @clear-input="clearImgInput" @update="getProduct"/>
         <!-- 新增/編輯餐點 -->
-        <ProductModalComponent ref="modal" :temp-product="tempProduct" :is-new="isNew" @clear-input="clearInput" @update="getProduct"></ProductModalComponent>
+        <ProductModalComponent ref="modal" :temp-product="tempProduct" :is-new="isNew" @clear-input="clearInput" @update="getProduct"/>
         <!-- 刪除餐點 -->
-        <DelProductModalComponent ref="delModal" :temp-product="tempProduct" @clear-input="clearInput" @update="getProduct"></DelProductModalComponent>
+        <DelProductModalComponent ref="delModal" :temp-product="tempProduct" @clear-input="clearInput" @update="getProduct"/>
     </div>
 </template>
 

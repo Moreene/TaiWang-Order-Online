@@ -64,11 +64,11 @@
         </div>
     </div>
     <!-- 分頁 -->
-    <AdminPaginationComponent :pagination="pagination" @emit-pages="getCoupons" v-if="pagination.total_pages > 1"></AdminPaginationComponent>
+    <AdminPaginationComponent :pagination="pagination" @emit-pages="getCoupons" v-if="pagination.total_pages > 1"/>
     <!-- 優惠券 -->
-    <CouponModalComponent ref="modal" :temp-coupon="tempCoupon" :is-new="isNew" @clear-input="clearInput" @update="getCoupons"></CouponModalComponent>
+    <CouponModalComponent ref="modal" :temp-coupon="tempCoupon" :is-new="isNew" @clear-input="clearInput" @update="getCoupons"/>
     <!-- 刪除優惠券 -->
-    <DelCouponModalComponent ref="delModal" :temp-coupon="tempCoupon" @clear-input="clearInput" @update="getCoupons"></DelCouponModalComponent>
+    <DelCouponModalComponent ref="delModal" :temp-coupon="tempCoupon" @clear-input="clearInput" @update="getCoupons"/>
 </template>
 
 <script>

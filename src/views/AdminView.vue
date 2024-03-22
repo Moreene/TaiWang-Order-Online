@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-outline-light fs-6 d-none d-md-block" @click="logout">登出</button>
         </div>
     </nav>
-    <RouterView></RouterView>
+    <RouterView/>
 </template>
 
 <script>

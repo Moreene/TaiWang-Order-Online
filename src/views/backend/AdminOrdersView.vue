@@ -65,11 +65,11 @@
             </table>
         </div>
         <!-- 分頁 -->
-        <AdminPaginationComponent :pagination="pagination" @emit-pages="getOrders" v-if="pagination.total_pages > 1"></AdminPaginationComponent>
+        <AdminPaginationComponent :pagination="pagination" @emit-pages="getOrders" v-if="pagination.total_pages > 1"/>
         <!-- 編輯訂單 -->
-        <OrderModalComponent ref="modal" :temp-order="tempOrder" @clear-input="clearInput" @update-order="getOrders"></OrderModalComponent>
+        <OrderModalComponent ref="modal" :temp-order="tempOrder" @clear-input="clearInput" @update-order="getOrders"/>
         <!-- 刪除訂單 -->
-        <DelOrderModalComponent ref="delModal" :temp-order="tempOrder" @update-order="getOrders"></DelOrderModalComponent>
+        <DelOrderModalComponent ref="delModal" :temp-order="tempOrder" @update-order="getOrders"/>
     </div>
 </template>
 

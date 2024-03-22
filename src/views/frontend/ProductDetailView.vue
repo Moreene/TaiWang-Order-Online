@@ -1,5 +1,5 @@
 <template>
-    <LoadingComponent v-model:active="isLoading"></LoadingComponent>
+    <LoadingComponent v-model:active="isLoading"/>
     <div class="py-72 py-lg-90">
         <div class="container">
             <!-- 麵包屑 -->
@@ -83,7 +83,7 @@
         <div class="container">
             <h3 class="fw-bold mb-32 mb-lg-24">
             <span class="text-title d-inline-block position-relative z-1">還想要來點什麼嗎...</span></h3>
-            <SwiperComponent :products="filterData" v-if="filterData.length > 4"></SwiperComponent>
+            <SwiperComponent :products="filterData" v-if="filterData.length > 4"/>
             <template v-else>
                 <div class="col-9 col-md-11 mx-auto">
                     <div class="row gy-48 gy-lg-0">

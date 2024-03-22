@@ -1,9 +1,9 @@
 <template>
-    <LoadingComponent v-model:active="isLoading"></LoadingComponent>
+    <LoadingComponent v-model:active="isLoading"/>
     <div class="bg-wave">
         <div class="container">
             <div class="col-lg-10 mx-auto pb-72">
-                <ProgessBarComponent></ProgessBarComponent>
+                <ProgessBarComponent/>
                 <div class="row justify-content-between gy-48 gy-lg-0">
                     <div class="col-lg-6">
                         <div class="table-responsive">

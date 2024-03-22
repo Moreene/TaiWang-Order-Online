@@ -63,7 +63,7 @@
         </ul>
     </div>
     <!-- 購物車offcanvas -->
-    <CartComponent></CartComponent>
+    <CartComponent/>
 </template>
 
 <script>

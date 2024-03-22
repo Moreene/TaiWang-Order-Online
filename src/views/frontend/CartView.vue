@@ -3,7 +3,7 @@
     <div class="bg-wave">
         <div class="container">
             <div class="col-lg-10 mx-auto">
-                <ProgessBarComponent></ProgessBarComponent>
+                <ProgessBarComponent/>
                 <!-- 購物車 -->
                 <template v-if="cart.carts && cart.carts.length">
                     <div class="mb-48">

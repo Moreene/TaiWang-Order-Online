@@ -1,5 +1,5 @@
 <template>
-    <LoadingComponent v-model:active="isLoading"></LoadingComponent>
+    <LoadingComponent v-model:active="isLoading"/>
     <BannerComponent>線上訂餐 / Menu</BannerComponent>
     <!-- 商品 -->
     <div class="container">
@@ -37,25 +37,23 @@
                     <div class="row gy-48">
                         <template v-if="matchProducts.length">
                             <div class="col-md-4 col-lg-3 mb-48" v-for="item in matchProducts" :key="item.id">
-                                <ProductsCardComponent :item="item"></ProductsCardComponent>
+                                <ProductsCardComponent :item="item"/>
                             </div>
-                            <PaginationComponent :products="matchProducts" @update-products="updateProducts"
-                                ref="pagination"></PaginationComponent>
+                            <PaginationComponent :products="matchProducts" @update-products="updateProducts" ref="pagination"/>
                         </template>
                         <template v-else-if="keyWord !== '' && !matchProducts.length">
                             <p class="mb-0 fs-6 text-center">抱歉，沒有符合「 {{ keyWord }} 」的餐點唷！</p>
                         </template>
                         <template v-else>
                             <div class="col-md-4 col-lg-3 mb-48" v-for="item in sliceProducts" :key="item.id">
-                                <ProductsCardComponent :item="item"></ProductsCardComponent>
+                                <ProductsCardComponent :item="item"/>
                             </div>
-                            <PaginationComponent :products="products" @update-products="updateProducts"
-                                ref="pagination"></PaginationComponent>
+                            <PaginationComponent :products="products" @update-products="updateProducts" ref="pagination"/>
                         </template>
                     </div>
                 </div>
                 <!-- 其他餐點 -->
-                <RouterView :match-products="matchProducts" :key-word="keyWord"></RouterView>
+                <RouterView :match-products="matchProducts" :key-word="keyWord"/>
             </div>
         </div>
     </div>

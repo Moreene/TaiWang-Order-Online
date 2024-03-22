@@ -1,8 +1,8 @@
 <template>
-    <NavbarComponent></NavbarComponent>
-    <RouterView></RouterView>
-    <FooterComponent></FooterComponent>
-    <SideMenuComponent></SideMenuComponent>
+    <NavbarComponent/>
+    <RouterView/>
+    <FooterComponent/>
+    <SideMenuComponent/>
 </template>
 
 <script>

@@ -3,18 +3,18 @@
         <div class="row gy-48 mb-48">
             <template v-if="matchProducts.length">
                 <div class="col-md-4 col-lg-3 mb-48" v-for="item in matchProducts" :key="item.id">
-                    <ProductsCardComponent :item="item"></ProductsCardComponent>
+                    <ProductsCardComponent :item="item"/>
                 </div>
-                <PaginationComponent :products="matchProducts" @update-products="updateProducts"></PaginationComponent>
+                <PaginationComponent :products="matchProducts" @update-products="updateProducts"/>
             </template>
             <template v-else-if="keyWord !== '' && !matchProducts.length">
                 <p class="mb-0 fs-6 text-center">抱歉，沒有符合「 {{ keyWord }} 」的餐點唷！</p>
             </template>
             <template v-else>
                 <div class="col-md-4 col-lg-3 mb-48" v-for="item in sliceProducts" :key="item.id">
-                    <ProductsCardComponent :item="item"></ProductsCardComponent>
+                    <ProductsCardComponent :item="item"/>
                 </div>
-                <PaginationComponent :products="data" @update-products="updateProducts"></PaginationComponent>
+                <PaginationComponent :products="data" @update-products="updateProducts"/>
             </template>
         </div>
     </div>
