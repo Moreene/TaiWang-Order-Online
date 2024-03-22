@@ -32,7 +32,7 @@
                                             class="btn btn-secondary text-light d-flex justify-content-center align-items-center w-25 h-85"
                                             type="button" @click="increaseCartNum(item)"><i class="bi bi-plus"></i></button>
                                     </div>
-                                    <p class="mb-0">NT$ <span class="text-notoSans">{{ item.product.price }}</span></p>
+                                    <p class="mb-0">NT$ <span class="text-notoSans">{{ item.product.price * item.qty }}</span></p>
                                 </div>
                             </div>
                         </div>
