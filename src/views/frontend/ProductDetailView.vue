@@ -46,7 +46,7 @@
                                 class="btn btn-secondary text-light d-flex justify-content-center align-items-center w-25"
                                 type="button" @click="qty++"><i class="bi bi-plus"></i></button>
                         </div>
-                        <button class="btn btn-outline-dark" @click="addCart(productDetail.id, qty)">加入購物車</button>
+                        <button type="button" class="btn btn-outline-dark" @click="addCart(productDetail.id, qty)">加入購物車</button>
                     </div>
                 </div>
             </div>

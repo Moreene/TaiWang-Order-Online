@@ -3,7 +3,7 @@
     <div class="container py-144">
         <h2 class="fw-bold mb-32">優惠列表</h2>
         <div class="text-end mb-24">
-            <button class="btn btn-primary text-light" @click.prevent="openModal('new', item)">
+            <button type="button" class="btn btn-primary text-light" @click.prevent="openModal('new', item)">
                 建立新優惠 <i class="bi bi-plus"></i>
             </button>
         </div>
