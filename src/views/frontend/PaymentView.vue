@@ -191,6 +191,7 @@ export default {
                 this.isLoading = false;
             })
             .catch(err => {
+                this.isLoading = false;
                 console.log(err);
             });
     },

@@ -108,6 +108,7 @@ export default {
                     this.isLoading = false;
                 })
                 .catch(err => {
+                    this.isLoading = false;
                     sweetalert('error', err.response.data.message);
                 });
         },
