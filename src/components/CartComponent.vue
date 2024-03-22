@@ -62,21 +62,6 @@
     </div>
 </template> 
 
-<style lang="scss" scoped>
-@import "@/assets/all.scss";
-
-.cart-link:hover {
-    i {
-        color: $warning;
-    }
-}
-
-.cart-img {
-    width: 80px;
-    height: 80px;
-}
-</style>
-
 <script>
 import { mapState, mapActions } from 'pinia';
 import cartStore from '@/stores/cartStore.js';
@@ -93,3 +78,18 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/all.scss";
+
+.cart-link:hover {
+    i {
+        color: $warning;
+    }
+}
+
+.cart-img {
+    width: 80px;
+    height: 80px;
+}
+</style>

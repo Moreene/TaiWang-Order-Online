@@ -7,12 +7,6 @@
     </div>
 </template>
 
-<style scoped>
-.error-title {
-    font-size: 120px;
-}
-</style>
-
 <script>
 export default {
     data() {
@@ -36,3 +30,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.error-title {
+    font-size: 120px;
+}
+</style>

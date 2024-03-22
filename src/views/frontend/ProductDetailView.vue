@@ -113,51 +113,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-@import "@/assets/all.scss";
-
-.main-img {
-    height: 400px;
-}
-
-.sub-img {
-    width: 120px;
-    height: 120px;
-}
-
-.text-title::after {
-    position: absolute;
-    display: block;
-    content: '';
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 10px;
-    background-color: $warning;
-    z-index: -1;
-}
-
-.card {
-    box-shadow: 5px 5px 10px rgba($color: #000000, $alpha: 0.3);
-
-    &:hover {
-        .card-img-overlay {
-            opacity: 1;
-            height: 150px;
-        }
-    }
-
-    &-img {
-        height: 150px;
-
-        &-overlay {
-            background-color: rgba($color: #000000, $alpha: 0.5);
-            opacity: 0;
-        }
-    }
-}
-</style>
-
 <script>
 import { mapState, mapActions } from 'pinia';
 import productStore from '@/stores/productStore.js';
@@ -208,3 +163,48 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/all.scss";
+
+.main-img {
+    height: 400px;
+}
+
+.sub-img {
+    width: 120px;
+    height: 120px;
+}
+
+.text-title::after {
+    position: absolute;
+    display: block;
+    content: '';
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 10px;
+    background-color: $warning;
+    z-index: -1;
+}
+
+.card {
+    box-shadow: 5px 5px 10px rgba($color: #000000, $alpha: 0.3);
+
+    &:hover {
+        .card-img-overlay {
+            opacity: 1;
+            height: 150px;
+        }
+    }
+
+    &-img {
+        height: 150px;
+
+        &-overlay {
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            opacity: 0;
+        }
+    }
+}
+</style>

@@ -63,6 +63,26 @@
     </div>
 </template>
 
+<script>
+import BannerComponent from '@/components/BannerComponent.vue';
+
+export default {
+    components: {
+        BannerComponent,
+    },
+    data() {
+        return {
+            activeTab: 'payment',
+        };
+    },
+    methods: {
+        goToTab(tab) {
+            this.activeTab = tab;
+        },
+    },
+}
+</script>
+
 <style lang="scss" scoped>
 @import '@/assets/all.scss';
 
@@ -116,23 +136,3 @@
     }
 }
 </style>
-
-<script>
-import BannerComponent from '@/components/BannerComponent.vue';
-
-export default {
-    components: {
-        BannerComponent,
-    },
-    data() {
-        return {
-            activeTab: 'payment',
-        };
-    },
-    methods: {
-        goToTab(tab) {
-            this.activeTab = tab;
-        },
-    },
-}
-</script>

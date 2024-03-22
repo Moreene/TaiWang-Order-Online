@@ -93,6 +93,46 @@
     </div>
 </template>
 
+<script>
+import { mapState } from 'pinia';
+import productStore from '@/stores/productStore.js';
+import categoryStore from '@/stores/categoryStore.js';
+import SwiperComponent from '@/components/SwiperComponent.vue';
+import LoadingComponent from '@/components/LoadingComponent.vue';
+
+import { RouterLink } from 'vue-router';
+
+export default {
+    components: {
+        RouterLink,
+        SwiperComponent,
+        LoadingComponent
+    },
+    methods: {
+        handleMouseOver(hoveredIdx) {
+            const links = this.$refs.tastyLinks;
+            links.forEach((link, index) => {
+                if (index !== hoveredIdx) {
+                    // 在Vue.js中，this.$refs 傳回的是一個包含了Vue實例的陣列，而不是原生的DOM元素
+                    // 因此，需要使用$el屬性來存取實際的DOM元素
+                    link.$el.classList.add("hovered");
+                }
+            });
+        },
+        handleMouseOut() {
+            const links = this.$refs.tastyLinks;
+            links.forEach(link => {
+                link.$el.classList.remove("hovered");
+            });
+        },
+    },
+    computed: {
+        ...mapState(productStore, ['sellProducts','isLoading']),
+        ...mapState(categoryStore, ['categories']),
+    }
+}
+</script>
+
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
 
@@ -154,44 +194,3 @@
     opacity: 1;
 }
 </style>
-
-<script>
-import { mapState } from 'pinia';
-import productStore from '@/stores/productStore.js';
-import categoryStore from '@/stores/categoryStore.js';
-import SwiperComponent from '@/components/SwiperComponent.vue';
-import LoadingComponent from '@/components/LoadingComponent.vue';
-
-import { RouterLink } from 'vue-router';
-
-export default {
-    components: {
-        RouterLink,
-        SwiperComponent,
-        LoadingComponent
-    },
-    methods: {
-        handleMouseOver(hoveredIdx) {
-            const links = this.$refs.tastyLinks;
-            links.forEach((link, index) => {
-                if (index !== hoveredIdx) {
-                    // 在Vue.js中，this.$refs 傳回的是一個包含了Vue實例的陣列，而不是原生的DOM元素
-                    // 因此，需要使用$el屬性來存取實際的DOM元素
-                    link.$el.classList.add("hovered");
-                }
-            });
-        },
-        handleMouseOut() {
-            const links = this.$refs.tastyLinks;
-            links.forEach(link => {
-                link.$el.classList.remove("hovered");
-            });
-        },
-    },
-    computed: {
-        ...mapState(productStore, ['sellProducts','isLoading']),
-        ...mapState(categoryStore, ['categories']),
-    }
-}
-
-</script>

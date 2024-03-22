@@ -36,15 +36,6 @@
     </footer>
 </template>
 
-<style lang="scss">
-@import "@/assets/all.scss";
-
-.primary-link.admin:hover {
-    background: $light;
-    color: $dark;
-}
-</style>
-
 <script>
 import axios from 'axios';
 
@@ -76,3 +67,12 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+@import "@/assets/all.scss";
+
+.primary-link.admin:hover {
+    background: $light;
+    color: $dark;
+}
+</style>

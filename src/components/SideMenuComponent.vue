@@ -24,6 +24,16 @@
     </ul>
 </template>
 
+<script>
+export default {
+    methods: {
+        scrollTop() {
+            window.scrollTo(0, 0);
+        },
+    }
+}
+</script>
+
 <style lang="scss" scoped>
 @import '@/assets/all.scss';
 
@@ -55,13 +65,3 @@
     }
 }
 </style>
-
-<script>
-export default {
-    methods: {
-        scrollTop() {
-            window.scrollTo(0, 0);
-        },
-    }
-}
-</script>

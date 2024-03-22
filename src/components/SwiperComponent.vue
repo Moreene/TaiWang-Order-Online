@@ -35,36 +35,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-.swiper {
-
-    &-button-prev:after,
-    &-button-next:after {
-        content: '';
-    }
-
-    &-card {
-        box-shadow: 5px 5px 10px rgba($color: #000000, $alpha: 0.3);
-
-        &:hover {
-            .swiper-img-overlay {
-                opacity: 1;
-                height: 150px;
-            }
-        }
-    }
-
-    &-img {
-        height: 150px;
-
-        &-overlay {
-            background-color: rgba($color: #000000, $alpha: 0.5);
-            opacity: 0;
-        }
-    }
-}
-</style>
-
 <script>
 import { mapActions } from 'pinia';
 import productStore from '@/stores/productStore.js';
@@ -115,3 +85,33 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.swiper {
+
+    &-button-prev:after,
+    &-button-next:after {
+        content: '';
+    }
+
+    &-card {
+        box-shadow: 5px 5px 10px rgba($color: #000000, $alpha: 0.3);
+
+        &:hover {
+            .swiper-img-overlay {
+                opacity: 1;
+                height: 150px;
+            }
+        }
+    }
+
+    &-img {
+        height: 150px;
+
+        &-overlay {
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            opacity: 0;
+        }
+    }
+}
+</style>

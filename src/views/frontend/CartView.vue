@@ -157,51 +157,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-@import '@/assets/all.scss';
-
-.food-img {
-    width: 140px;
-    height: 120px;
-
-    @include pad {
-        width: 100%;
-    }
-}
-
-.fixed-height {
-    height: 455px;
-    overflow-y: auto;
-}
-
-.empety-cart {
-    width: 250px;
-    height: 250px;
-    animation-name: swing;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-
-    @include pad {
-        width: 350px;
-        height: 350px;
-    }
-}
-
-@keyframes swing {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    50% {
-        transform: rotate(-5deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-}
-</style>
-
 <script>
 import axios from 'axios';
 import { mapState, mapActions } from 'pinia';
@@ -278,3 +233,48 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/all.scss';
+
+.food-img {
+    width: 140px;
+    height: 120px;
+
+    @include pad {
+        width: 100%;
+    }
+}
+
+.fixed-height {
+    height: 455px;
+    overflow-y: auto;
+}
+
+.empety-cart {
+    width: 250px;
+    height: 250px;
+    animation-name: swing;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+
+    @include pad {
+        width: 350px;
+        height: 350px;
+    }
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+</style>

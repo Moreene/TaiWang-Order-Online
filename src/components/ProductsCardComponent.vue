@@ -15,6 +15,20 @@
     </div>
 </template>
 
+<script>
+import { mapActions } from 'pinia';
+import productStore from '@/stores/productStore.js';
+import cartStore from '@/stores/cartStore.js';
+
+export default {
+    props: ['item'],
+    methods: {
+        ...mapActions(productStore, ['getProduct']),
+        ...mapActions(cartStore, ['addCart']),
+    },
+}
+</script>
+
 <style lang="scss" scoped>
 .card {
     &-img-wrapper {
@@ -33,17 +47,3 @@
     }
 }
 </style>
-
-<script>
-import { mapActions } from 'pinia';
-import productStore from '@/stores/productStore.js';
-import cartStore from '@/stores/cartStore.js';
-
-export default {
-    props: ['item'],
-    methods: {
-        ...mapActions(productStore, ['getProduct']),
-        ...mapActions(cartStore, ['addCart']),
-    },
-}
-</script>

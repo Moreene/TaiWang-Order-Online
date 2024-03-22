@@ -9,18 +9,6 @@
     </GoogleMap>
 </template>
 
-<style lang="scss" scoped>
-@import '@/assets/all.scss';
-
-.google-map {
-    height: 250px;
-
-    @include pad {
-        height: 350px;
-    }
-}
-</style>
-
 <script>
 import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map';
 
@@ -50,3 +38,15 @@ export default {
     },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/all.scss';
+
+.google-map {
+    height: 250px;
+
+    @include pad {
+        height: 350px;
+    }
+}
+</style>

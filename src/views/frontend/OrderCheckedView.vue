@@ -40,30 +40,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-@import '@/assets/all.scss';
-
-.order-info::after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 2px;
-    background-color: $dark;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-
-    @include pad {
-        width: 75%;
-    }
-
-    @include pc {
-        width: 50%;
-    }
-}
-</style>
-
 <script>
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 
@@ -92,3 +68,27 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+@import '@/assets/all.scss';
+
+.order-info::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: $dark;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+
+    @include pad {
+        width: 75%;
+    }
+
+    @include pc {
+        width: 50%;
+    }
+}
+</style>

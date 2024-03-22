@@ -58,12 +58,6 @@
     </div>
 </template>
 
-<style scoped>
-img {
-    height: 380px;
-}
-</style>
-
 <script>
 import BannerComponent from '@/components/BannerComponent.vue';
 
@@ -73,3 +67,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+img {
+    height: 380px;
+}
+</style>

@@ -27,6 +27,23 @@
     </div>
 </template>
 
+<script>
+export default {
+    mounted() {
+        const path = this.$route.path.split('/')[1];
+        if (path === 'cart') {
+            this.$refs.progessCart.classList.add('active');
+        } else if (path === 'orderInfo') {
+            this.$refs.progessInfo.classList.add('active');
+        } else if (path === 'payment') {
+            this.$refs.progessPayment.classList.add('active');
+        } else if (path === 'orderChecked') {
+            this.$refs.progessOrder.classList.add('active');
+        };
+    },
+}
+</script>
+
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
 
@@ -66,20 +83,3 @@
     }
 }
 </style>
-
-<script>
-export default {
-    mounted() {
-        const path = this.$route.path.split('/')[1];
-        if (path === 'cart') {
-            this.$refs.progessCart.classList.add('active');
-        } else if (path === 'orderInfo') {
-            this.$refs.progessInfo.classList.add('active');
-        } else if (path === 'payment') {
-            this.$refs.progessPayment.classList.add('active');
-        } else if (path === 'orderChecked') {
-            this.$refs.progessOrder.classList.add('active');
-        };
-    },
-}
-</script>

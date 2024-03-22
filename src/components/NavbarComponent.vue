@@ -66,6 +66,40 @@
     <CartComponent></CartComponent>
 </template>
 
+<script>
+import { mapState, mapActions } from 'pinia';
+import cartStore from '@/stores/cartStore.js';
+import CartComponent from '@/components/CartComponent.vue';
+
+export default {
+    components: {
+        CartComponent,
+    },
+    methods: {
+        ...mapActions(cartStore, ['getCart']),
+        toggleHam() {
+            this.$refs.ham.classList.toggle('active');
+        },
+        hideNavbar() {
+            const navbar = this.$refs.navbarNav;
+            if (navbar.classList.contains('show')) {
+                navbar.classList.remove('show');
+                this.$refs.ham.classList.remove('active');
+            };
+        },
+    },
+    computed: {
+        ...mapState(cartStore, ['cart']),
+        isLinkActive() {
+            return this.$route.path.startsWith('/products') || this.$route.path.startsWith('/categories');
+        },
+    },
+    created() {
+        this.getCart();
+    },
+}
+</script>
+
 <style lang="scss" scoped>
 @import "@/assets/all.scss";
 
@@ -132,37 +166,3 @@
     }
 }
 </style>
-
-<script>
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore.js';
-import CartComponent from '@/components/CartComponent.vue';
-
-export default {
-    components: {
-        CartComponent,
-    },
-    methods: {
-        ...mapActions(cartStore, ['getCart']),
-        toggleHam() {
-            this.$refs.ham.classList.toggle('active');
-        },
-        hideNavbar() {
-            const navbar = this.$refs.navbarNav;
-            if (navbar.classList.contains('show')) {
-                navbar.classList.remove('show');
-                this.$refs.ham.classList.remove('active');
-            };
-        },
-    },
-    computed: {
-        ...mapState(cartStore, ['cart']),
-        isLinkActive() {
-            return this.$route.path.startsWith('/products') || this.$route.path.startsWith('/categories');
-        },
-    },
-    created() {
-        this.getCart();
-    },
-}
-</script>
