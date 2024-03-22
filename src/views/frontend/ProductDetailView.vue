@@ -1,5 +1,5 @@
 <template>
-    <LoadingComponent v-model:active="isLoading"/>
+    <LoadingComponent v-model:active="isLoading" />
     <div class="py-72 py-lg-90">
         <div class="container">
             <!-- 麵包屑 -->
@@ -39,14 +39,15 @@
                     <div class="d-flex">
                         <div class="input-group w-50 me-24">
                             <button
-                                class="btn btn-secondary text-light d-flex justify-content-center align-items-center w-25"
+                                class="btn btn-dark text-light d-flex justify-content-center align-items-center w-25"
                                 type="button" @click="qty--" :disabled="qty <= 1"><i class="bi bi-dash"></i></button>
                             <input type="text" class="form-control text-center" min="1" v-model.number="qty" readonly>
                             <button
-                                class="btn btn-secondary text-light d-flex justify-content-center align-items-center w-25"
+                                class="btn btn-dark text-light d-flex justify-content-center align-items-center w-25"
                                 type="button" @click="qty++"><i class="bi bi-plus"></i></button>
                         </div>
-                        <button type="button" class="btn btn-outline-dark" @click="addCart(productDetail.id, qty)">加入購物車</button>
+                        <button type="button" class="btn btn-outline-dark"
+                            @click="addCart(productDetail.id, qty)">加入購物車</button>
                     </div>
                 </div>
             </div>
@@ -82,29 +83,30 @@
         <!-- 相關商品 -->
         <div class="container">
             <h3 class="fw-bold mb-32 mb-lg-24">
-            <span class="text-title d-inline-block position-relative z-1">還想要來點什麼嗎...</span></h3>
-            <SwiperComponent :products="filterData" v-if="filterData.length > 4"/>
+                <span class="text-title d-inline-block position-relative z-1">還想要來點什麼嗎...</span>
+            </h3>
+            <SwiperComponent :products="filterData" v-if="filterData.length > 4" />
             <template v-else>
                 <div class="col-9 col-md-11 mx-auto">
                     <div class="row gy-48 gy-lg-0">
                         <div class="col-md-4 col-lg-3" v-for="item in filterData" :key="item.id">
-                            <div class="card border-0">
+                            <a href="#" class="card border-0" @click.prevent="getProduct(item.id)">
                                 <div
                                     class="card-img-top card-img-overlay position-absolute top-0 w-100 d-flex justify-content-center align-items-center">
-                                    <a href="#" class="stretched-link" @click.prevent="getProduct(item.id)"><i
-                                            class="bi bi-search fs-1 text-light"></i></a>
+                                    <i class="bi bi-search fs-1 text-light"></i>
                                 </div>
                                 <img :src="item.imageUrl" class="card-img-top card-img" :alt="item.title">
                                 <div class="card-body">
                                     <h2 class="fs-5 text-center">{{ item.title }}</h2>
-                                    <p class="text-center text-danger fw-bold fs-6 mb-20">NT$ <span class="text-notoSans">
+                                    <p class="text-center text-danger fw-bold fs-6 mb-20">NT$ <span
+                                            class="text-notoSans">
                                             {{ item.price }}</span></p>
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-primary link-light"
-                                            @click.prevent="addCart(item.id)">加入購物車</a>
+                                        <button type="button" class="btn btn-primary link-light px-44"
+                                            @click.prevent.stop="addCart(item.id)">加入購物車</button>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -160,6 +162,9 @@ export default {
     created() {
         this.getProducts();
         this.getProduct(this.$route.params.id);
+    },
+    beforeRouteUpdate() {
+        this.qty = 1;
     },
 };
 </script>

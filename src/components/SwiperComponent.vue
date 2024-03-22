@@ -19,8 +19,7 @@
                                     <p class="text-center fw-bold fs-6 mb-20">NT$ <span class="text-notoSans">
                                             {{ item.price }}</span></p>
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-primary link-light px-44"
-                                            @click.prevent="addCart(item.id)">加入購物車</a>
+                                        <button type="button" class="btn btn-primary link-light px-44" @click.prevent.stop="addCart(item.id)">加入購物車</button>
                                     </div>
                                 </div>
                             </a>
