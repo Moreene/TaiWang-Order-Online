@@ -12,11 +12,10 @@
             <!-- 桌面版-nav -->
             <ul class="navbar-nav d-none d-md-block d-md-flex">
                 <li class="nav-item">
-                    <RouterLink to="/about" class="nav-link primary-link fs-6">關於我們</RouterLink>
+                    <RouterLink to="/products" class="nav-link primary-link fs-6" :class="{ 'active': isLinkActive }">線上訂餐</RouterLink>
                 </li>
                 <li class="nav-item">
-                    <RouterLink to="/products" class="nav-link primary-link fs-6" :class="{ 'active': isLinkActive }">線上訂餐
-                    </RouterLink>
+                    <RouterLink to="/about" class="nav-link primary-link fs-6">關於我們</RouterLink>
                 </li>
                 <li class="nav-item">
                     <RouterLink to="/faq" class="nav-link primary-link fs-6">常見問題</RouterLink>
@@ -34,7 +33,7 @@
                 <a class="btn btn-dark border-0 cart-link p-0 pe-8" data-bs-toggle="offcanvas" href="#offcanvasRight"
                     role="button" aria-controls="offcanvasRight"><i class="bi bi-cart3 fs-3"></i></a>
                 <div
-                    class="cart-num bg-danger text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">
+                    class="cart-num bg-danger text-white rounded-circle d-flex justify-content-center align-items-center position-absolute" v-if="cart.carts && cart.carts.length">
                     <span class="fs-8" v-if="cart.carts">{{ cart.carts.length }}</span>
                 </div>
             </div>
@@ -44,12 +43,12 @@
     <div class="collapse navbar-collapse w-100 bg-dark d-md-none position-fixed z-99" id="navbarNav" ref="navbarNav"
         @click="hideNavbar">
         <ul class="navbar-nav text-center px-16">
-            <li class="nav-item ">
-                <RouterLink to="/about" class="nav-link mobile border-bottom border-secondary fs-5 px-16 py-16">關於我們
-                </RouterLink>
-            </li>
             <li class="nav-item">
                 <RouterLink to="/products" class="nav-link mobile border-bottom border-secondary fs-5 px-16 py-16">線上訂餐
+                </RouterLink>
+            </li>
+            <li class="nav-item ">
+                <RouterLink to="/about" class="nav-link mobile border-bottom border-secondary fs-5 px-16 py-16">關於我們
                 </RouterLink>
             </li>
             <li class="nav-item">

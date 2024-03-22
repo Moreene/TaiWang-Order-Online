@@ -8,23 +8,22 @@
                         :autoplay="{ delay: 3500, disableOnInteraction: false, pauseOnMouseEnter: true }"
                         :breakpoints="swiperOptions.breakpoints" class="swiper p-16">
                         <swiper-slide v-for="item in products" :key="item.id">
-                            <div class="card border-0 swiper-card">
+                            <a href="#" class="card border-0 swiper-card" @click.prevent="getProduct(item.id)">
                                 <div
                                     class="card-img-top swiper-img-overlay position-absolute top-0 w-100 d-flex justify-content-center align-items-center">
-                                    <a href="#" class="stretched-link" @click.prevent="getProduct(item.id)"><i
-                                            class="bi bi-search fs-1 text-light"></i></a>
+                                    <i class="bi bi-search fs-1 text-light"></i>
                                 </div>
                                 <img :src="item.imageUrl" class="card-img-top swiper-img" :alt="item.title">
                                 <div class="card-body">
                                     <h2 class="fs-5 text-center">{{ item.title }}</h2>
-                                    <p class="text-center text-danger fw-bold fs-6 mb-20">NT$ <span class="text-notoSans">
+                                    <p class="text-center fw-bold fs-6 mb-20">NT$ <span class="text-notoSans">
                                             {{ item.price }}</span></p>
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-primary link-light"
+                                        <a href="#" class="btn btn-primary link-light px-44"
                                             @click.prevent="addCart(item.id)">加入購物車</a>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </swiper-slide>
                     </swiper>
                 </template>
@@ -95,7 +94,7 @@ export default {
     }
 
     &-card {
-        box-shadow: 5px 5px 10px rgba($color: #000000, $alpha: 0.3);
+        box-shadow: 5px 5px 10px rgba($color: #000000, $alpha: 0.2);
 
         &:hover {
             .swiper-img-overlay {
