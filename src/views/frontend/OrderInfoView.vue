@@ -137,7 +137,7 @@ export default {
                         this.$router.push(`/payment/${orderId}`);
                     }, 1500);
                 })
-                .catch(err => {
+                .catch(() => {
                     toast('top', 'error', '表單送出失敗');
                 });
         },

@@ -54,10 +54,10 @@ export default {
         },
         checkLogin() {
             axios.post(`${VITE_API}/api/user/check`)
-                .then(res => {
+                .then(() => {
                     this.$router.push('/admin');
                 })
-                .catch(err => {
+                .catch(() => {
                     this.$router.push('/adminLogin');
                 });
         },

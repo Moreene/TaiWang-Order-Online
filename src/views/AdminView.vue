@@ -96,7 +96,7 @@ export default {
                     });
                     setTimeout(() => {
                         axios.post(`${VITE_API}/logout`)
-                            .then(res => {
+                            .then(() => {
                                 document.cookie = `myToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
                                 this.$router.push('/adminLogin');
                             })

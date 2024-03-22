@@ -155,7 +155,7 @@ export default {
                         is_enabled: newState ? 1 : 0 
                     }; 
                     axios.put(`${VITE_API}/api/${VITE_APIPATH}/admin/product/${item.id}`, { "data": requestData })
-                        .then(res => {
+                        .then(() => {
                             swalWithBootstrapButtons.fire({
                                 title: `已更新 ${item.title} 的啟用狀態`,
                                 icon: "success",
@@ -163,7 +163,7 @@ export default {
                                 timer: 2000,
                             });
                         })
-                        .catch(err => {
+                        .catch(() => {
                             sweetalert('error','更新啟用狀態失敗');
                         });
                 } else {

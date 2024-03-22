@@ -165,7 +165,7 @@ export default {
         },
         submitOrder() {
             axios.post(`${VITE_API}/api/${VITE_APIPATH}/pay/${this.$route.params.id}`)
-                .then(res => {
+                .then(() => {
                     toast('top', 'success', '已成功付款');
                     setTimeout(() => {
                         this.$router.push('/orderChecked');

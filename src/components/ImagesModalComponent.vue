@@ -122,16 +122,16 @@ export default {
                     this.url = res.data.imageUrl;
                     this.$refs.fileInput.value = '';
                 })
-                .catch(err => {
+                .catch(() => {
                     sweetalert('error','圖片上傳失敗');
                 });
         },
         copyUrl(){
             navigator.clipboard.writeText(this.$refs.imgUrl.value)
-                .then(res => {
+                .then(() => {
                     sweetalert('success','已複製圖片Url');
                 })
-                .catch(err => {
+                .catch(() => {
                     sweetalert('error','複製圖片Url失敗');
                 });
         },

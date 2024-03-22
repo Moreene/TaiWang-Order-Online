@@ -190,12 +190,12 @@ export default {
                 "code": this.coupon,
             };
             axios.post(`${VITE_API}/api/${VITE_APIPATH}/coupon`, { "data": code })
-                .then(res => {
+                .then(() => {
                     toast('top', 'success', '已成功使用優惠代碼');
                     this.getCart();
                     this.coupon = '';
                 })
-                .catch(err => {
+                .catch(() => {
                     toast('top', 'error', '優惠代碼使用失敗');
                     this.coupon = '';
                 });
@@ -211,7 +211,7 @@ export default {
                     e.target.blur();
                     toast('top', 'success', '已成功複製優惠代碼');
                 })
-                .catch(err => {
+                .catch(() => {
                     toast('top', 'error', '複製優惠代碼失敗');
                 });
         },
