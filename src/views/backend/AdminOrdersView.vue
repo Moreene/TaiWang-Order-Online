@@ -37,7 +37,7 @@
                 </thead>
                 <tbody class="text-nowrap text-center">
                     <tr v-for="(item, idx) in orders" :key="item.id">
-                        <td>{{ date[idx] }}</td>
+                        <td>{{ item.paid_date ? date[idx] : '未成立' }}</td>
                         <td>{{ item.id }}</td>
                         <td>{{ item.user.name }}</td>
                         <td>{{ item.user.tel }}</td>

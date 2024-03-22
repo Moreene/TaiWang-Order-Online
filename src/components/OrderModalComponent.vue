@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <v-form ref="form" v-slot="{ errors }" @submit="updateOrder">
                         <h2 class="h5 fw-bold">訂單編號：<span class="d-block d-sm-inline">{{ order.id }}</span></h2>
-                        <h2 class="h5 fw-bold">訂單日期：{{ date }}</h2>
+                        <h2 class="h5 fw-bold">訂單日期：{{ order.paid_date ? date : '未成立' }}</h2>
                         <div class="row py-24">
                             <div class="col-lg-6">
                                 <div class="row gy-16" v-if="order.user">
