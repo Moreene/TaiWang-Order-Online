@@ -19,7 +19,7 @@ export default defineStore('productStore', {
                 this.products = res.data.products;
                 this.sellProducts = this.products.filter(item => item.hot);
             } catch (error) {
-                console.log(err);
+                console.log(error);
             } finally {
                 this.isLoading = false;
             };
@@ -31,7 +31,7 @@ export default defineStore('productStore', {
                 const res = await axios.get(`${VITE_API}/api/${VITE_APIPATH}/product/${id}`);
                 this.productDetail = res.data.product;
             } catch (error) {
-                console.log(err);
+                console.log(error);
             } finally {
                 this.isLoading = false;
             };
