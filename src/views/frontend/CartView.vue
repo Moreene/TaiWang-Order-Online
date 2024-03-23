@@ -1,5 +1,5 @@
 <template>
-    <LoadingComponent v-model:active="isLoading"></LoadingComponent>
+    <LoadingComponent v-model:active="isLoading"/>
     <div class="bg-wave">
         <div class="container">
             <div class="col-lg-10 mx-auto">
@@ -159,6 +159,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { mapState, mapActions } from 'pinia';
 import cartStore from '@/stores/cartStore.js';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
@@ -184,7 +185,36 @@ export default {
         ...mapState(cartStore, ['cart']),
     },
     methods: {
-        ...mapActions(cartStore, ['deleteItem', 'increaseCartNum', 'decreaseCartNum', 'getCart']),
+        ...mapActions(cartStore, ['increaseCartNum', 'decreaseCartNum', 'getCart']),
+        deleteItem(item) {
+            const itemName = item.product.title;
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-secondary text-light",
+                    cancelButton: "btn btn-outline-secondary me-16"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: `是否要刪除 ${itemName} ？`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "是, 我要刪除",
+                cancelButtonText: "我再想想",
+                reverseButtons: true
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.delete(`${VITE_API}/api/${VITE_APIPATH}/cart/${item.id}`)
+                        .then(() => {
+                            toast('top', 'warning', `已刪除 "${itemName}"`);
+                            this.getCart();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                }
+            });
+        },
         useCoupon() {
             const code = {
                 "code": this.coupon,
