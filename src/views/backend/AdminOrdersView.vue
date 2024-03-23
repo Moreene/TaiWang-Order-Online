@@ -1,5 +1,5 @@
 <template>
-    <VueLoading v-model:active="isLoading" loader="bars" color="#ff9900"></VueLoading>
+    <VueLoading v-model:active="isLoading" loader="bars" color="#ff9900"/>
     <div class="container py-144">
         <h2 class="fw-bold mb-32">訂單列表</h2>
         <div class="table-responsive mb-16">

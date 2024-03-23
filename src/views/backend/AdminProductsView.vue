@@ -1,5 +1,5 @@
 <template>
-    <VueLoading v-model:active="isLoading" loader="bars" color="#ff9900"></VueLoading>
+    <VueLoading v-model:active="isLoading" loader="bars" color="#ff9900"/>
     <div class="container py-144">
         <h2 class="fw-bold mb-32">餐點列表</h2>
         <div class="text-end mb-24">
@@ -70,7 +70,7 @@
             </table>
         </div>
         <!-- 分頁 -->
-        <AdminPaginationComponent :pagination="pagination" @emit-pages="getProduct"></AdminPaginationComponent>
+        <AdminPaginationComponent :pagination="pagination" @emit-pages="getProduct"/>
         <!-- 編輯圖片 -->
         <ImagesModalComponent ref="imageModal" :temp-product="tempProduct" @clear-input="clearImgInput" @update="getProduct"/>
         <!-- 新增/編輯餐點 -->
