@@ -1356,7 +1356,7 @@ $pagination-bg:                     var(--#{$prefix}body-bg) !default;
 $pagination-border-radius:          var(--#{$prefix}border-radius) !default;
 $pagination-border-width:           var(--#{$prefix}border-width) !default;
 $pagination-margin-start:           calc(#{$pagination-border-width} * -1) !default; // stylelint-disable-line function-disallowed-list
-$pagination-border-color:           var(--#{$prefix}border-color) !default;
+$pagination-border-color:           none;//var(--#{$prefix}border-color) !default; customer
 
 $pagination-focus-color:            var(--#{$prefix}link-hover-color) !default;
 $pagination-focus-bg:               none;//var(--#{$prefix}secondary-bg) !default; customer
@@ -1371,8 +1371,8 @@ $pagination-active-color:           $component-active-color !default;
 $pagination-active-bg:              $component-active-bg !default;
 $pagination-active-border-color:    $component-active-bg !default;
 
-$pagination-disabled-color:         var(--#{$prefix}secondary-color) !default;
-$pagination-disabled-bg:            var(--#{$prefix}secondary-bg) !default;
+$pagination-disabled-color:         $gray;//var(--#{$prefix}secondary-color) !default; customer
+$pagination-disabled-bg:            none;//var(--#{$prefix}secondary-bg) !default; customer
 $pagination-disabled-border-color:  var(--#{$prefix}border-color) !default;
 
 $pagination-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;

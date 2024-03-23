@@ -50,15 +50,11 @@ export default {
                     this.$refs.form.resetForm();
                     const { token, expired } = res.data;
                     document.cookie = `myToken=${token}; expires=${new Date(expired)};`;
-                    this.user = {
-                        username: '',
-                        password: '',
-                    },
-                        toast('top', 'success', res.data.message);
+                    toast('top', 'success', res.data.message);
                     setTimeout(() => this.$router.push('/admin'), 1500);
                 })
-                .catch(err => {
-                    toast('top', 'error', err.response.data.message);
+                .catch(() => {
+                    toast('top', 'error', '登入失敗');
                 });
         },
     },

@@ -1,5 +1,5 @@
 <template>
-    <div class="card w-75 w-md-100 mx-auto">
+    <a href="#" class="card w-75 w-md-100 mx-auto" @click.prevent="getProduct(item.id)">
         <div class="card-img-wrapper w-100 rounded-top overflow-hidden">
             <img :src="item.imageUrl" class="w-100 h-100 rounded-top" :alt="item.title">
         </div>
@@ -8,11 +8,10 @@
             <p class="text-center text-danger fw-bold fs-6 mb-20">NT$ <span class="text-notoSans">
                     {{ item.price }}</span></p>
             <div class="text-center">
-                <a href="#" class="btn btn-primary link-light me-8" @click.prevent="addCart(item.id)">加入購物車</a>
-                <a href="#" class="btn btn-secondary px-16" @click.prevent="getProduct(item.id)"><i class="bi bi-search text-light"></i></a>
+                <button type="button" class="btn btn-primary link-light px-44" @click.prevent.stop="addCart(item.id)">加入購物車</button>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 
 <script>
