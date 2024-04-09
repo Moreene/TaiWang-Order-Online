@@ -1,4 +1,4 @@
-<template v-if="isShow">
+<template >
     <nav class="navbar navbar-expand-md bg-dark py-16 fixed-top" data-bs-theme="dark">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -34,7 +34,7 @@
             <button type="button" class="btn btn-outline-light fs-6 d-none d-md-block" @click="logout">登出</button>
         </div>
     </nav>
-    <RouterView/>
+    <RouterView v-if="isShow" />
 </template>
 
 <script>
