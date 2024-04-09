@@ -207,9 +207,6 @@ export default {
         },
     },
     mounted() {
-        const token = document.cookie.replace(
-            /(?:(?:^|.*;\s*)myToken\s*\=\s*([^;]*).*$)|^.*$/, "$1",);
-        axios.defaults.headers.common['Authorization'] = token;
         this.getProduct();
     },
 }
