@@ -31,8 +31,8 @@ export default defineStore('cartStore', {
                     toast('top', 'success', res.data.message);
                     this.getCart();
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(() => {
+                    toast('top', 'warning', `加入購物車失敗`);
                 });
         },
         // 刪除單一品項
@@ -43,8 +43,8 @@ export default defineStore('cartStore', {
                     toast('top', 'warning', `已刪除 "${itemName}"`);
                     this.getCart();
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(() => {
+                    toast('top', 'warning', `刪除 "${itemName}" 失敗`);
                 });
         },
         // 透過 + 修改購物車數量
@@ -59,8 +59,9 @@ export default defineStore('cartStore', {
                     toast('top', 'success', `已更新 ${item.product.title} 的數量`);
                     this.getCart();
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(() => {
+                    item.qty--;
+                    toast('top', 'warning', `更新 ${item.product.title} 的數量失敗`);
                 })
         },
         // 透過 - 修改購物車數量
@@ -75,8 +76,9 @@ export default defineStore('cartStore', {
                     toast('top', 'success', `已更新 ${item.product.title} 的數量`);
                     this.getCart();
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch(() => {
+                    item.qty++;
+                    toast('top', 'warning', `更新 ${item.product.title} 的數量失敗`);
                 })
         },
     },
