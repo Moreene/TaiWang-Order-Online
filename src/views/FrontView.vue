@@ -1,8 +1,8 @@
 <template>
-    <NavbarComponent/>
-    <RouterView/>
-    <FooterComponent/>
-    <SideMenuComponent/>
+  <NavbarComponent />
+  <RouterView />
+  <FooterComponent />
+  <SideMenuComponent />
 </template>
 
 <script>
@@ -11,10 +11,10 @@ import FooterComponent from '@/components/FooterComponent.vue';
 import SideMenuComponent from '@/components/SideMenuComponent.vue';
 
 export default {
-    components: {
-        NavbarComponent,
-        FooterComponent,
-        SideMenuComponent,
-    },
+  components: {
+    NavbarComponent,
+    FooterComponent,
+    SideMenuComponent,
+  },
 }
 </script>

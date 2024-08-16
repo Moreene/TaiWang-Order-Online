@@ -16,12 +16,12 @@ import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
 Object.keys(AllRules).forEach(rule => {
-    defineRule(rule, AllRules[rule]);
+  defineRule(rule, AllRules[rule]);
 });
 
 configure({
-    generateMessage: localize({ zh_TW: zhTW }),
-    validateOnInput: false,
+  generateMessage: localize({ zh_TW: zhTW }),
+  validateOnInput: false,
 });
 setLocale('zh_TW');
 
