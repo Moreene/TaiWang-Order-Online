@@ -32,6 +32,7 @@
 - [x] 優惠券新增/修改/刪除
 
 ## 安裝
+* node 版本 18.16.0
 * `npm install` - 初次下載專案後，需要使用 npm install 來安裝套件  
 * `npm run dev` - 執行開發模式  
   * 若沒有自動開啟瀏覽器，可嘗試手動在瀏覽器上輸入 `http://localhost:5173/TaiWang-Order-Online/`<br><br>
