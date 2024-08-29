@@ -112,58 +112,43 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia';
-import productStore from '@/stores/productStore.js';
-import cartStore from '@/stores/cartStore.js';
+<script setup>
+import { ref, watch } from 'vue';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useProductStore } from '@/stores/useProductStore.js';
+import { useCartStore } from '@/stores/useCartStore.js';
 import SwiperComponent from '@/components/SwiperComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
 
-export default {
-  components: {
-    SwiperComponent,
-    LoadingComponent,
-  },
-  data() {
-    return {
-      qty: 1,
-      filterData: [],
-    };
-  },
-  methods: {
-    ...mapActions(productStore, ['getProduct', 'getProducts']),
-    ...mapActions(cartStore, ['addCart']),
-    showImage(id) {
-      this.productDetail.imageUrl = this.productDetail.imagesUrl[id];
-    },
-    getFilterData() {
-      this.filterData = this.products.filter(item => item.category === this.productDetail.category);
-    },
-  },
-  computed: {
-    ...mapState(productStore, ['products', 'productDetail', 'isLoading']),
-  },
-  watch: {
-    // 確保在數據加載完成後才執行 getFilterData()
-    products: {
-      handler() {
-        this.getFilterData();
-      },
-    },
-    productDetail: {
-      handler() {
-        this.getFilterData();
-      },
-    },
-  },
-  created() {
-    this.getProducts();
-    this.getProduct(this.$route.params.id);
-  },
-  beforeRouteUpdate() {
-    this.qty = 1;
-  },
+const qty = ref(1);
+const filterData = ref([]);
+
+const productStore = useProductStore();
+const { getProduct, getProducts } = productStore;
+const { products, productDetail, isLoading } = storeToRefs(productStore);
+const cartStore = useCartStore();
+const { addCart } = cartStore;
+
+getProducts();
+const route = useRoute();
+getProduct(route.params.id);
+
+function showImage(id) {
+  productDetail.value.imageUrl = productDetail.value.imagesUrl[id];
 };
+
+function getFilterData() {
+  filterData.value = products.value.filter(item => item.category === productDetail.value.category);
+};
+
+watch([products, productDetail], () => {
+  getFilterData();
+});
+
+onBeforeRouteUpdate(() => {
+  qty.value = 1;
+});
 </script>
 
 <style lang="scss" scoped>

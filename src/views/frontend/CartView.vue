@@ -146,111 +146,103 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore.js';
+import { useCartStore } from '@/stores/useCartStore.js';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
-
 import { toast } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const router = useRouter();
+const coupon = ref('');
+const delivery = ref('自取');
+const isLoading = ref(true);
+const cartStore = useCartStore();
+const { cart } = storeToRefs(cartStore);
+const { increaseCartNum, decreaseCartNum, getCart } = cartStore;
 
-export default {
-  components: {
-    ProgessBarComponent,
-    LoadingComponent,
-  },
-  data() {
-    return {
-      coupon: '',
-      delivery: '自取',
-      isLoading: true,
-    }
-  },
-  computed: {
-    ...mapState(cartStore, ['cart']),
-  },
-  methods: {
-    ...mapActions(cartStore, ['increaseCartNum', 'decreaseCartNum', 'getCart']),
-    deleteItem(item) {
-      const itemName = item.product.title;
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-secondary text-light",
-          cancelButton: "btn btn-outline-secondary me-16"
-        },
-        buttonsStyling: false
-      });
-      swalWithBootstrapButtons.fire({
-        title: `是否要刪除 ${itemName} ？`,
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "是, 我要刪除",
-        cancelButtonText: "我再想想",
-        reverseButtons: true
-      }).then(result => {
-        if (result.isConfirmed) {
-          axios.delete(`${VITE_API}/api/${VITE_APIPATH}/cart/${item.id}`)
-            .then(() => {
-              toast('top', 'warning', `已刪除 "${itemName}"`);
-              this.getCart();
-            })
-            .catch(err => {
-              console.log(err);
-            });
-        }
-      });
+function deleteItem(item) {
+  const itemName = item.product.title;
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-secondary text-light",
+      cancelButton: "btn btn-outline-secondary me-16"
     },
-    useCoupon() {
-      const code = {
-        "code": this.coupon,
+    buttonsStyling: false
+  });
+  swalWithBootstrapButtons.fire({
+    title: `是否要刪除 ${itemName} ？`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "是, 我要刪除",
+    cancelButtonText: "我再想想",
+    reverseButtons: true
+  }).then(result => {
+    if (result.isConfirmed) {
+      axios.delete(`${VITE_API}/api/${VITE_APIPATH}/cart/${item.id}`)
+        .then(() => {
+          toast('top', 'warning', `已刪除 "${itemName}"`);
+          getCart();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+  });
+};
+
+function useCoupon() {
+  const code = {
+    "code": coupon.value,
+  };
+  axios.post(`${VITE_API}/api/${VITE_APIPATH}/coupon`, { "data": code })
+    .then(() => {
+      toast('top', 'success', '已成功使用優惠代碼');
+      getCart();
+      coupon.value = '';
+    })
+    .catch(() => {
+      toast('top', 'error', '優惠代碼使用失敗');
+      coupon.value = '';
+    });
+};
+
+function goCheckout() {
+  localStorage.setItem('pickUp', delivery.value);
+  router.push('/orderInfo');
+};
+
+const code = ref(null);
+function copyCode(e) {
+  const textNode = code.value.innerText;
+  navigator.clipboard.writeText(textNode)
+    .then(() => {
+      e.target.blur();
+      toast('top', 'success', '已成功複製優惠代碼');
+    })
+    .catch(() => {
+      toast('top', 'error', '複製優惠代碼失敗');
+    });
+};
+
+watch(
+  () => cart.value.final_total, // 监听 cart.final_total
+  (newVal) => {
+    if (typeof newVal !== 'undefined') {
+      if (Math.round(newVal) < 500) {
+        delivery.value = '自取'; // 设置 delivery 的值
       };
-      axios.post(`${VITE_API}/api/${VITE_APIPATH}/coupon`, { "data": code })
-        .then(() => {
-          toast('top', 'success', '已成功使用優惠代碼');
-          this.getCart();
-          this.coupon = '';
-        })
-        .catch(() => {
-          toast('top', 'error', '優惠代碼使用失敗');
-          this.coupon = '';
-        });
-    },
-    goCheckout() {
-      localStorage.setItem('pickUp', this.delivery);
-      this.$router.push('/orderInfo');
-    },
-    copyCode(e) {
-      const textNode = this.$refs.code.innerText;
-      navigator.clipboard.writeText(textNode)
-        .then(() => {
-          e.target.blur();
-          toast('top', 'success', '已成功複製優惠代碼');
-        })
-        .catch(() => {
-          toast('top', 'error', '複製優惠代碼失敗');
-        });
-    },
+    };
   },
-  watch: {
-    'cart.final_total': {
-      handler(newVal) {
-        if (typeof newVal !== 'undefined') {
-          if (Math.round(newVal) < 500) {
-            this.delivery = '自取';
-          };
-        };
-      },
-      immediate: true,
-    },
-  },
-  created() {
-    setTimeout(() => this.isLoading = false, 400);
-  },
-}
+  { immediate: true }
+);
+
+setTimeout(() => isLoading.value = false, 400);
 </script>
 
 <style lang="scss" scoped>

@@ -10,13 +10,13 @@
           <li class="nav-item" role="presentation">
             <button class="nav-link fs-6" id="all-tab" type="button" role="tab" aria-controls="all"
               data-bs-target="#all" aria-selected="true" @click="goTo('products', $event)"
-              :class="{ 'active': this.$route.path === '/products' }">所有餐點</button>
+              :class="{ 'active': $route.path === '/products' }">所有餐點</button>
           </li>
           <template v-for="item in categories" :key="item">
             <li class="nav-item" role="presentation">
               <button class="nav-link fs-6" :id="item.name + '-tab'" type="button" role="tab" :aria-controls="item.name"
                 :data-bs-target="'#' + item.name" aria-selected="false" @click="goTo(item.path, $event)"
-                :class="{ 'active': this.$route.path === `/categories/${item.path}` }">
+                :class="{ 'active': $route.path === `/categories/${item.path}` }">
                 {{ item.name }}</button>
             </li>
           </template>
@@ -32,7 +32,7 @@
       <div class="tab-content">
         <!-- 所有餐點 -->
         <div class="tab-pane show" id="all" role="tabpanel" aria-labelledby="all-tab" tabindex="0"
-          :class="{ 'active': this.$route.path === '/products' }">
+          :class="{ 'active': $route.path === '/products' }">
           <div class="row gy-48">
             <template v-if="matchProducts.length">
               <div class="col-md-4 col-lg-3 mb-48" v-for="item in matchProducts" :key="item.id">
@@ -58,74 +58,60 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia';
-import productStore from '@/stores/productStore.js';
-import categoryStore from '@/stores/categoryStore.js';
+<script setup>
+import { ref, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useProductStore } from '@/stores/useProductStore.js';
+import { useCategoryStore } from '@/stores/useCategoryStore.js';
 import BannerComponent from '@/components/BannerComponent.vue';
 import ProductsCardComponent from '@/components/ProductsCardComponent.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
 import debounce from "lodash.debounce";
 
-export default {
-  components: {
-    BannerComponent,
-    ProductsCardComponent,
-    PaginationComponent,
-    LoadingComponent
-  },
-  data() {
-    return {
-      sliceProducts: [],
-      keyWord: '',
-      matchProducts: [],
-    }
-  },
-  methods: {
-    ...mapActions(productStore, ['getProducts']),
-    updateProducts(data) {
-      this.sliceProducts = data;
-    },
-    goTo(path, e) {
-      e.target.blur(); // 修改路由時，取消nav-link殘留的focus樣式
-      if (this.$refs.pagination) {
-        this.resetPagination();
-      };
-      if (path === 'products') {
-        this.keyWord = '';
-        this.matchProducts = [];
-        this.$router.push('/products');
-      } else {
-        this.keyWord = '';
-        this.matchProducts = [];
-        this.$router.push(`/categories/${path}`);
-      };
-    },
-    resetPagination() {
-      this.$refs.pagination.resetPage();
-    },
-  },
-  computed: {
-    ...mapState(productStore, ['products', 'isLoading']),
-    ...mapState(categoryStore, ['categories']),
-    recommendation() {
-      return this.products.filter(item => item.recommendation);
-    },
-  },
-  created() {
-    this.getProducts();
-    this.getMatchProducts = debounce(e => {
-      this.keyWord = e.target.value;
-      if (this.keyWord.trim() !== '') {
-        this.matchProducts = this.products.filter(item => item.title.match(this.keyWord));
-      } else {
-        this.matchProducts = [];
-      };
-    }, 800);
-  },
-  beforeUnmount() {
-    this.getMatchProducts.cancel();
-  },
-}
+const sliceProducts = ref([]);
+const keyWord = ref('');
+const matchProducts = ref([]);
+
+const productStore = useProductStore();
+const { getProducts } = productStore;
+const { products, isLoading } = storeToRefs(productStore);
+getProducts();
+
+const categoryStore = useCategoryStore();
+const { categories } = storeToRefs(categoryStore);
+
+function updateProducts(data) {
+  sliceProducts.value = data;
+};
+
+const pagination = ref(null);
+const router = useRouter();
+function goTo(path, e) {
+  e.target.blur(); // 修改路由時，取消nav-link殘留的focus樣式
+  if (pagination.value) {
+    pagination.value.resetPage();
+  };
+  if (path === 'products') {
+    keyWord.value = '';
+    matchProducts.value = [];
+    router.push('/products');
+  } else {
+    keyWord.value = '';
+    matchProducts.value = [];
+    router.push(`/categories/${path}`);
+  };
+};
+
+const getMatchProducts = debounce((e) => {
+  keyWord.value = e.target.value;
+  if (keyWord.value.trim() !== '') {
+    matchProducts.value = products.value.filter(item => item.title.match(keyWord.value));
+  } else {
+    matchProducts.value = [];
+  };
+}, 800);
+
+onUnmounted(() => getMatchProducts.cancel());
 </script>

@@ -9,33 +9,22 @@
   </GoogleMap>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map';
 
-export default {
-  components: {
-    GoogleMap,
-    Marker,
-    InfoWindow,
-  },
-  data() {
-    return {
-      apiKey: import.meta.env.VITE_MAP,
-      center: { lat: 25.126325, lng: 121.45365 },
-      markerOptions: {
-        position: { lat: 25.126325, lng: 121.45365 },
-      },
-      infoWindowOptions: {
-        position: { lat: 25.126325, lng: 121.45365 },
-      },
-      infoWinOpen: false
-    };
-  },
-  methods: {
-    showInfoWin() {
-      this.infoWinOpen = !this.infoWinOpen;
-    },
-  },
+const apiKey = import.meta.env.VITE_MAP;
+const center = { lat: 25.126325, lng: 121.45365 };
+const markerOptions = {
+  position: { lat: 25.126325, lng: 121.45365 },
+};
+const infoWindowOptions = {
+  position: { lat: 25.126325, lng: 121.45365 },
+};
+const infoWinOpen = ref(false);
+
+function showInfoWin() {
+  infoWinOpen.value = !infoWinOpen.value;
 };
 </script>
 

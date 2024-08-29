@@ -8,28 +8,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      countdown: 5,
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const countdown = ref(5);
+const router = useRouter();
+
+function startCountdown() {
+  const interval = setInterval(() => {
+    countdown.value--;
+    if (countdown.value === 0) {
+      clearInterval(interval);
+      router.push('/');
     }
-  },
-  methods: {
-    startCountdown() {
-      const interval = setInterval(() => {
-        this.countdown--;
-        if (this.countdown === 0) {
-          clearInterval(interval);
-          this.$router.push('/');
-        };
-      }, 1000);
-    },
-  },
-  created() {
-    this.startCountdown();
-  },
-}
+  }, 1000);
+};
+
+startCountdown();
 </script>
 
 <style scoped>

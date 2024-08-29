@@ -34,55 +34,45 @@
   </div>
 </template>
 
-<script>
-import { mapActions } from 'pinia';
-import productStore from '@/stores/productStore.js';
-import cartStore from '@/stores/cartStore.js';
+<script setup>
+import { ref, reactive, defineProps, onMounted } from 'vue';
+import { useProductStore } from '@/stores/useProductStore.js';
+import { useCartStore } from '@/stores/useCartStore.js';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-export default {
-  props: ['products'],
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  data() {
-    return {
-      modules: [Navigation, Autoplay],
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      swiperOptions: {
-        breakpoints: {
-          1200: {
-            slidesPerView: 4
-          },
-          992: {
-            slidesPerView: 3
-          },
-          768: {
-            slidesPerView: 2
-          },
-          0: {
-            slidesPerView: 1
-          }
-        }
-      },
+const props = defineProps(['products']);
+const modules = ref([Navigation, Autoplay]);
+const navigation = ref({
+  nextEl: '.swiper-button-next',
+  prevEl: '.swiper-button-prev',
+});
+const swiperOptions = reactive({
+  breakpoints: {
+    1200: {
+      slidesPerView: 4
+    },
+    992: {
+      slidesPerView: 3
+    },
+    768: {
+      slidesPerView: 2
+    },
+    0: {
+      slidesPerView: 1
     }
-  },
-  methods: {
-    ...mapActions(productStore, ['getProducts', 'getProduct']),
-    ...mapActions(cartStore, ['addCart']),
-  },
-  mounted() {
-    this.getProducts();
-  },
-}
+  }
+});
+
+const productStore = useProductStore();
+const { getProducts, getProduct } = productStore;
+const cartStore = useCartStore();
+const { addCart } = cartStore;
+
+onMounted(() => getProducts());
 </script>
 
 <style lang="scss" scoped>

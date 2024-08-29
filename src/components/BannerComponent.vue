@@ -15,17 +15,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      img: '',
-    }
-  },
-  created() {
-    this.img = this.$route.meta.BannerImage;
-  },
-}
+<script setup>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const img = ref('');
+const route = useRoute();
+img.value = route.meta.BannerImage;
 </script>
 
 <style lang="scss" scoped>

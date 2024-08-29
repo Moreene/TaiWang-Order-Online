@@ -52,7 +52,7 @@
                 <error-message name="內容" class="invalid-feedback fw-bold"></error-message>
               </div>
               <div class="text-end mt-auto">
-                <button type="submit" class="btn btn-primary text-white w-25" :disabled="isFormComplete">提交</button>
+                <button type="submit" class="btn btn-primary text-white w-25" :disabled="isFormEmpty">提交</button>
               </div>
             </v-form>
           </div>
@@ -62,49 +62,42 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import BannerComponent from '@/components/BannerComponent.vue';
 import MapComponent from '@/components/MapComponent.vue';
-
 import { toast } from '@/methods/sweetalert';
 
-export default {
-  components: {
-    BannerComponent,
-    MapComponent,
-  },
-  data() {
-    return {
-      name: '',
-      email: '',
-      title: '',
-      content: '',
-    }
-  },
-  methods: {
-    addTitleColor(zone) {
-      if (zone === 'contact') {
-        this.$refs.contactUs.classList.add('text-primary');
-      } else {
-        this.$refs.feedback.classList.add('text-primary');
-      };
-    },
-    removeTitleColor(zone) {
-      if (zone === 'contact') {
-        this.$refs.contactUs.classList.remove('text-primary');
-      } else {
-        this.$refs.feedback.classList.remove('text-primary');
-      };
-    },
-    submitForm() {
-      toast('top', 'success', '已成功提交回饋表單');
-      this.$refs.form.resetForm();
-    },
-  },
-  computed: {
-    isFormComplete() {
-      return !this.name && !this.email && !this.title && !this.content;
-    },
-  },
-}
+const name = ref('');
+const email = ref('');
+const title = ref('');
+const content = ref('');
+const contactUs = ref(null);
+const feedback = ref(null);
+const form = ref(null);
+
+function addTitleColor(zone) {
+  if (zone === 'contact') {
+    contactUs.value.classList.add('text-primary');
+  } else {
+    feedback.value.classList.add('text-primary');
+  };
+};
+
+function removeTitleColor(zone) {
+  if (zone === 'contact') {
+    contactUs.value.classList.remove('text-primary');
+  } else {
+    feedback.value.classList.remove('text-primary');
+  };
+};
+
+function submitForm() {
+  toast('top', 'success', '已成功提交回饋表單');
+  form.value.resetForm();
+};
+
+const isFormEmpty = computed(() => {
+  return !name.value || !email.value || !title.value || !content.value;
+});
 </script>

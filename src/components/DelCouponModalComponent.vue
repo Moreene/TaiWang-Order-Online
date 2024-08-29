@@ -27,40 +27,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, defineProps, defineEmits, defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempCoupon']);
+const emit = defineEmits(['update', 'clearInput','closeModal']);
+const delCouponModal = ref(null);
 
-export default {
-  props: ['tempCoupon'],
-  data() {
-    return {
-      delCouponModal: null,
-    }
-  },
-  methods: {
-    delProduct() {
-      axios.delete(`${VITE_API}/api/${VITE_APIPATH}/admin/coupon/${this.tempCoupon.id}`)
-        .then(res => {
-          sweetalert('success', res.data.message);
-          this.$emit('update');
-          this.$emit('clearInput');
-          this.delCouponModal.hide();
-        })
-        .catch(err => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-  },
-  mounted() {
-    this.delCouponModal = new Modal(this.$refs.delCouponModal, {
-      keyboard: false,
-      backdrop: 'static',
+function delProduct() {
+  axios.delete(`${VITE_API}/api/${VITE_APIPATH}/admin/coupon/${props.tempCoupon.id}`)
+    .then(res => {
+      sweetalert('success', res.data.message);
+      emit('update');
+      emit('closeModal');
+    })
+    .catch(err => {
+      console.log(err)
+      sweetalert('error', err.response.data.message);
     });
-  },
-}
+};
+
+defineExpose({
+  delCouponModal,
+});
 </script>

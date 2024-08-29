@@ -68,8 +68,8 @@
                     </tbody>
                   </table>
                 </div>
-                <p class="ps-12 mt-24 fs-6 fw-bold mb-4">總金額：NT$ <span class="text-notoSans">{{
-    Math.round(order.total) }}</span><span class="text-danger fs-7"
+                <p class="ps-12 mt-24 fs-6 fw-bold mb-4">總金額：NT$ <span class="text-notoSans">
+                    {{ Math.round(order.total) }}</span><span class="text-danger fs-7"
                     v-if="order.total !== originTotal">﹙已使用優惠折扣﹚</span>
                 </p>
               </div>
@@ -119,75 +119,66 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
-
 import { toast } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const route = useRoute();
+const router = useRouter();
+const order = ref({});
+const isLoading = ref(true);
 
-export default {
-  components: {
-    ProgessBarComponent,
-    LoadingComponent,
-  },
-  data() {
-    return {
-      order: {},
-      isLoading: true,
-    }
-  },
-  methods: {
-    setBlur(e) {
-      const maxLength = parseInt(e.target.getAttribute('maxlength'));
-      if (e.target.value.length === maxLength) {
-        let nextInput = e.target.nextElementSibling.nextElementSibling;
-        nextInput.focus();
-      };
-    },
-    sharedError(value) {
-      return value ? value : '請輸入完整卡號';
-    },
-    validDate(value) {
-      return value ? true : '請選擇有效年/月';
-    },
-    securityNum(value) {
-      const num = /\d{3}/;
-      return num.test(value) ? true : '請輸入卡片背面末3碼數字';
-    },
-    submitOrder() {
-      axios.post(`${VITE_API}/api/${VITE_APIPATH}/pay/${this.$route.params.id}`)
-        .then(() => {
-          toast('top', 'success', '已成功付款');
-          setTimeout(() => {
-            this.$router.push('/orderChecked');
-          }, 1500);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-  },
-  computed: {
-    originTotal() {
-      if (this.order && this.order.products) {
-        return Object.values(this.order.products).reduce((total, product) => total + product.total, 0);
-      };
-    },
-  },
-  created() {
-    localStorage.setItem('orderNum', this.$route.params.id);
-    axios.get(`${VITE_API}/api/${VITE_APIPATH}/order/${this.$route.params.id}`)
-      .then(res => {
-        this.order = res.data.order;
-        this.isLoading = false;
-      })
-      .catch(err => {
-        this.isLoading = false;
-        console.log(err);
-      });
-  },
-}
+localStorage.setItem('orderNum', route.params.id);
+axios.get(`${VITE_API}/api/${VITE_APIPATH}/order/${route.params.id}`)
+  .then(res => {
+    order.value = res.data.order;
+    isLoading.value = false;
+  })
+  .catch(err => {
+    isLoading.value = false;
+    console.log(err);
+  });
+
+function setBlur(e) {
+  const maxLength = parseInt(e.target.getAttribute('maxlength'));
+  if (e.target.value.length === maxLength) {
+    let nextInput = e.target.nextElementSibling.nextElementSibling;
+    nextInput.focus();
+  };
+};
+
+function validDate(value) {
+  return value ? true : '請選擇有效年/月';
+};
+
+function securityNum(value) {
+  const num = /\d{3}/;
+  return num.test(value) ? true : '請輸入卡片背面末3碼數字';
+};
+
+function submitOrder() {
+  axios.post(`${VITE_API}/api/${VITE_APIPATH}/pay/${route.params.id}`)
+    .then(() => {
+      toast('top', 'success', '已成功付款');
+      setTimeout(() => {
+        router.push('/orderChecked');
+      }, 1500);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+// 研究
+const originTotal = computed(() => {
+  if (order.value && order.value.products) {
+    return Object.values(order.value.products).reduce((total, product) => total + product.total, 0);
+  };
+});
 </script>

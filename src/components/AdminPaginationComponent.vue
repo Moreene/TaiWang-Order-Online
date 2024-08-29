@@ -19,14 +19,14 @@
   </nav>
 </template>
 
-<script>
-export default {
-  props: ['pagination'],
-  methods: {
-    emitPages(item) {
-      window.scrollTo(0, 0);
-      this.$emit('emit-pages', item);
-    },
-  },
-}
+<script setup>
+import { defineProps, defineEmits } from 'vue';
+
+const props = defineProps(['pagination']);
+const emit = defineEmits(['emit-pages']);
+
+function emitPages(item) {
+  window.scrollTo(0, 0);
+  emit('emit-pages', item);
+};
 </script>

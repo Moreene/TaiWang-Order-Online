@@ -25,37 +25,28 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { RouterLink } from 'vue-router';
 import { toast } from '@/methods/sweetalert';
 
 const { VITE_API } = import.meta.env;
+const user = ref({ username: '', password: '' });
+const form = ref(null);
+const router = useRouter();
 
-export default {
-  components: { RouterLink },
-  data() {
-    return {
-      user: {
-        username: '',
-        password: '',
-      }
-    };
-  },
-  methods: {
-    login() {
-      axios.post(`${VITE_API}/admin/signin`, this.user)
-        .then(res => {
-          this.$refs.form.resetForm();
-          const { token, expired } = res.data;
-          document.cookie = `myToken=${token}; expires=${new Date(expired)};`;
-          toast('top', 'success', res.data.message);
-          setTimeout(() => this.$router.push('/admin'), 1500);
-        })
-        .catch(() => {
-          toast('top', 'error', '登入失敗');
-        });
-    },
-  },
-}
+function login() {
+  axios.post(`${VITE_API}/admin/signin`, user.value)
+    .then(res => {
+      form.value.resetForm();
+      const { token, expired } = res.data;
+      document.cookie = `myToken=${token}; expires=${new Date(expired)};`;
+      toast('top', 'success', res.data.message);
+      setTimeout(() => router.push('/admin'), 1500);
+    })
+    .catch(() => {
+      toast('top', 'error', '登入失敗');
+    });
+};
 </script>

@@ -38,7 +38,7 @@
   * 若沒有自動開啟瀏覽器，可嘗試手動在瀏覽器上輸入 `http://localhost:5173/TaiWang-Order-Online/`<br><br>
 
 ## 學習技能
-* Option API 寫法
+* Composition API 寫法
 * Vite 環境建置
 * Vue Router 建構路由
 * Pinia 全局狀態管理

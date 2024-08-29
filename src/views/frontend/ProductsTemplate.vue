@@ -20,50 +20,40 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'pinia';
-import productStore from '@/stores/productStore.js';
+<script setup>
+import { ref, computed, defineProps } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useProductStore } from '@/stores/useProductStore.js';
 import ProductsCardComponent from '@/components/ProductsCardComponent.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 
-export default {
-  props: ['category', 'matchProducts', 'keyWord'],
-  components: {
-    ProductsCardComponent,
-    PaginationComponent
-  },
-  data() {
-    return {
-      sliceProducts: [],
-    }
-  },
-  methods: {
-    updateProducts(data) {
-      this.sliceProducts = data;
-    },
-  },
-  computed: {
-    ...mapState(productStore, ['products']),
-    data() {
-      switch (this.category) {
-        case 'recommendation':
-          return this.products.filter(item => item.recommendation);
-        case 'salad':
-          return this.products.filter(item => item.category === '開胃涼拌');
-        case 'meat':
-          return this.products.filter(item => item.category === '大口吃肉');
-        case 'vegetable':
-          return this.products.filter(item => item.category === '大口吃菜');
-        case 'seafood':
-          return this.products.filter(item => item.category === '泰鮮海鮮');
-        case 'rice':
-          return this.products.filter(item => item.category === '來一點飯');
-        case 'drink':
-          return this.products.filter(item => item.category === '冰涼泰飲');
-        case 'dessert':
-          return this.products.filter(item => item.category === '泰式甜點');
-      }
-    },
-  },
-}
+const props = defineProps(['category', 'matchProducts', 'keyWord']);
+const sliceProducts = ref([]);
+
+function updateProducts(data) {
+  sliceProducts.value = data;
+};
+
+const productStore = useProductStore();
+const { products } = storeToRefs(productStore);
+const data = computed(() => {
+  switch (props.category) {
+    case 'recommendation':
+      return products.value.filter(item => item.recommendation);
+    case 'salad':
+      return products.value.filter(item => item.category === '開胃涼拌');
+    case 'meat':
+      return products.value.filter(item => item.category === '大口吃肉');
+    case 'vegetable':
+      return products.value.filter(item => item.category === '大口吃菜');
+    case 'seafood':
+      return products.value.filter(item => item.category === '泰鮮海鮮');
+    case 'rice':
+      return products.value.filter(item => item.category === '來一點飯');
+    case 'drink':
+      return products.value.filter(item => item.category === '冰涼泰飲');
+    case 'dessert':
+      return products.value.filter(item => item.category === '泰式甜點');
+  };
+});
 </script>

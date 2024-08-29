@@ -61,22 +61,21 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore.js';
+<script setup>
+import { useRouter } from 'vue-router';
+import { useCartStore } from '@/stores/useCartStore.js';
+import { storeToRefs } from 'pinia';
 
-export default {
-  computed: {
-    ...mapState(cartStore, ['cart']),
-  },
-  methods: {
-    ...mapActions(cartStore, ['deleteItem', 'increaseCartNum', 'decreaseCartNum']),
-    goToCart() {
-      this.$router.push('/cart');
-    },
-  },
-}
+const router = useRouter();
+const cartStore = useCartStore();
+const { cart } = storeToRefs(cartStore);
+const { deleteItem, increaseCartNum, decreaseCartNum } = cartStore;
+
+function goToCart() {
+  router.push('/cart');
+};
 </script>
+
 
 <style lang="scss" scoped>
 @import "@/assets/all.scss";

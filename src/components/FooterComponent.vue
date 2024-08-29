@@ -35,36 +35,36 @@
   </footer>
 </template>
 
-<script>
+<script setup>
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const { VITE_API } = import.meta.env;
+const router = useRouter();
 
-export default {
-  methods: {
-    adminLogin() {
-      const token = this.getCookie('myToken');
-      if (!token) {
-        this.$router.push('/adminLogin');
-        return;
-      } else {
-        this.checkLogin();
-      };
-    },
-    checkLogin() {
-      axios.post(`${VITE_API}/api/user/check`)
-        .then(() => {
-          this.$router.push('/admin');
-        })
-        .catch(() => {
-          this.$router.push('/adminLogin');
-        });
-    },
-    getCookie(name) {
-      return document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*\=\s*([^;]*).*$)|^.*$/, "$1",);
-    },
-  },
-}
+function adminLogin() {
+  const token = getCookie('myToken');
+  if (!token) {
+    router.push('/adminLogin');
+    return;
+  } else {
+    checkLogin();
+  };
+};
+
+function checkLogin() {
+  axios.post(`${VITE_API}/api/user/check`)
+    .then(() => {
+      router.push('/admin');
+    })
+    .catch(() => {
+      router.push('/adminLogin');
+    });
+};
+
+function getCookie(name) {
+  return document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*\=\s*([^;]*).*$)|^.*$/, "$1",);
+};
 </script>
 
 <style lang="scss">

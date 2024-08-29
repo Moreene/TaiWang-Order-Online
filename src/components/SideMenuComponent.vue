@@ -24,14 +24,10 @@
   </ul>
 </template>
 
-<script>
-export default {
-  methods: {
-    scrollTop() {
-      window.scrollTo(0, 0);
-    },
-  }
-}
+<script setup>
+function scrollTop() {
+  window.scrollTo(0, 0);
+};
 </script>
 
 <style lang="scss" scoped>

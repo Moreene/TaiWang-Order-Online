@@ -37,8 +37,7 @@
                       :class="{ 'is-invalid': errors['主圖連結'] }" placeholder="請輸入圖片連結" rules="required"></v-field>
                     <error-message name="主圖連結" class="invalid-feedback"></error-message>
                   </div>
-                  <!-- <img class="modal-img w-100" :src="product.imageUrl" alt="主圖"
-                                        v-if="product.imageUrl"> -->
+                  <!-- <img class="modal-img w-100" :src="product.imageUrl" alt="主圖" v-if="product.imageUrl"> -->
                 </div>
                 <!-- 如果product.imagesUrl不為空，顯示以下資訊 -->
                 <div class="mb-8" v-if="product.imagesUrl">
@@ -49,7 +48,7 @@
                       placeholder="請輸入副圖連結" rules="required"></v-field>
                     <error-message :name="'副圖' + (idx + 1)" class="invalid-feedback"></error-message>
                     <!-- v-if="item.length"：檢查目前item（圖像 URL）的屬性是否為真
-                                        - 如果item是undefined或空字串，則條件計算結果為假，則不渲染影像 -->
+                      - 如果item是undefined或空字串，則條件計算結果為假，則不渲染影像 -->
                     <!-- <img class="modal-img w-100" v-if="item.length" :src="item"> -->
                   </div>
                   <!-- 若陣列為空或最後一個元素為真，則顯示「新增圖片」按鈕；否則，顯示“刪除圖片”按鈕 -->

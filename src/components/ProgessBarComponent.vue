@@ -27,21 +27,28 @@
   </div>
 </template>
 
-<script>
-export default {
-  mounted() {
-    const path = this.$route.path.split('/')[1];
-    if (path === 'cart') {
-      this.$refs.progessCart.classList.add('active');
-    } else if (path === 'orderInfo') {
-      this.$refs.progessInfo.classList.add('active');
-    } else if (path === 'payment') {
-      this.$refs.progessPayment.classList.add('active');
-    } else if (path === 'orderChecked') {
-      this.$refs.progessOrder.classList.add('active');
-    };
-  },
-}
+<script setup>
+import { ref,onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
+const progessCart = ref(null);
+const progessInfo = ref(null);
+const progessPayment = ref(null);
+const progessOrder = ref(null);
+
+onMounted(() => {
+  const path = route.path.split('/')[1];
+  if (path === 'cart') {
+    progessCart.value.classList.add('active');
+  } else if (path === 'orderInfo') {
+    progessInfo.value.classList.add('active');
+  } else if (path === 'payment') {
+    progessPayment.value.classList.add('active');
+  } else if (path === 'orderChecked') {
+    progessOrder.value.classList.add('active');
+  };
+});
 </script>
 
 <style lang="scss" scoped>

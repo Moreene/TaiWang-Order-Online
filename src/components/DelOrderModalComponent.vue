@@ -25,39 +25,29 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, defineProps, defineEmits, defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempOrder']);
+const emit = defineEmits(['updateOrder','closeModal']);
+const delOrderModal = ref(null);
 
-export default {
-  props: ['tempOrder'],
-  data() {
-    return {
-      delOrderModal: null,
-    }
-  },
-  methods: {
-    delProduct() {
-      axios.delete(`${VITE_API}/api/${VITE_APIPATH}/admin/order/${this.tempOrder.id}`)
-        .then((res) => {
-          sweetalert('success', res.data.message);
-          this.$emit('updateOrder');
-          this.delOrderModal.hide();
-        })
-        .catch((err) => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-  },
-  mounted() {
-    this.delOrderModal = new Modal(this.$refs.delOrderModal, {
-      keyboard: false,
-      backdrop: 'static'
+function delProduct() {
+  axios.delete(`${VITE_API}/api/${VITE_APIPATH}/admin/order/${props.tempOrder.id}`)
+    .then((res) => {
+      sweetalert('success', res.data.message);
+      emit('updateOrder');
+      emit('closeModal');
+    })
+    .catch((err) => {
+      sweetalert('error', err.response.data.message);
     });
-  }
-}
+};
+
+defineExpose({
+  delOrderModal,
+});
 </script>

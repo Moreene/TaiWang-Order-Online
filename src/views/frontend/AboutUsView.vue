@@ -61,14 +61,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import BannerComponent from '@/components/BannerComponent.vue';
-
-export default {
-  components: {
-    BannerComponent,
-  },
-}
 </script>
 
 <style scoped>

@@ -67,38 +67,38 @@
   <CartComponent />
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore.js';
+<script setup>
+import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useCartStore } from '@/stores/useCartStore.js';
 import CartComponent from '@/components/CartComponent.vue';
 
-export default {
-  components: {
-    CartComponent,
-  },
-  methods: {
-    ...mapActions(cartStore, ['getCart']),
-    toggleHam() {
-      this.$refs.ham.classList.toggle('active');
-    },
-    hideNavbar() {
-      const navbar = this.$refs.navbarNav;
-      if (navbar.classList.contains('show')) {
-        navbar.classList.remove('show');
-        this.$refs.ham.classList.remove('active');
-      };
-    },
-  },
-  computed: {
-    ...mapState(cartStore, ['cart']),
-    isLinkActive() {
-      return this.$route.path.startsWith('/products') || this.$route.path.startsWith('/categories');
-    },
-  },
-  created() {
-    this.getCart();
-  },
-}
+const route = useRoute();
+const cartStore = useCartStore();
+const { getCart } = cartStore;
+const { cart } = storeToRefs(cartStore);
+
+const ham = ref(null);
+const navbarNav = ref(null);
+
+function toggleHam() {
+  ham.value.classList.toggle('active');
+};
+
+function hideNavbar() {
+  const navbar = navbarNav.value;
+  if (navbar.classList.contains('show')) {
+    navbar.classList.remove('show');
+    ham.value.classList.remove('active');
+  };
+};
+
+const isLinkActive = computed(() => {
+  return route.path.startsWith('/products') || route.path.startsWith('/categories');
+});
+
+getCart();
 </script>
 
 <style lang="scss" scoped>

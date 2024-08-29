@@ -31,13 +31,13 @@
               </table>
             </div>
             <p class="text-end fw-bold fs-5 mt-16 mb-0"><span class="me-8">總計：</span>NT$ <span class="text-notoSans">{{
-    Math.round(cart.final_total) }}</span></p>
+              Math.round(cart.final_total) }}</span></p>
             <p class="text-end fw-bold text-danger" v-if="cart.final_total !== cart.total">(已使用優惠代碼)</p>
           </div>
           <div class="col-lg-5">
             <div class="border border-gray bg-white rounded-2 p-20">
               <h2 class="h4 text-center fw-bold mb-24">訂購資訊</h2>
-              <v-form ref="form" v-slot="{ errors }" @submit="submitOrder">
+              <v-form  v-slot="{ errors }" @submit="submitOrder">
                 <div class="mb-16">
                   <label for="name" class="form-label">姓名 <span class="text-danger">*</span></label>
                   <v-field id="name" name="姓名" type="text" class="form-control border-gray" v-model="form.user.name"
@@ -71,7 +71,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                   <RouterLink to="/cart" class="btn btn-outline-dark">回上一頁</RouterLink>
-                  <button type="submit" class="btn btn-primary text-white" :disabled="isFormComplete">送出訂單</button>
+                  <button type="submit" class="btn btn-primary text-white" :disabled="isFormEmpty">送出訂單</button>
                 </div>
               </v-form>
             </div>
@@ -82,74 +82,68 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from 'axios';
-import { mapState, mapActions } from 'pinia';
-import cartStore from '@/stores/cartStore.js';
+import { ref, reactive, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useCartStore } from '@/stores/useCartStore.js';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
-
 import { toast } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const router = useRouter();
+const form = reactive({
+  user: {
+    name: '',
+    email: '',
+    tel: '',
+    address: '',
+  },
+  message: '',
+});
+const address = ref(null);
+const isLoading = ref(true);
 
-export default {
-  components: {
-    ProgessBarComponent,
-    LoadingComponent,
-  },
-  data() {
-    return {
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
-        },
-        message: '',
-      },
-      isLoading: true,
-    }
-  },
-  methods: {
-    ...mapActions(cartStore, ['getCart']),
-    isPhone(value) {
-      const phoneNumber = /^(09)[0-9]{8}$/
-      return phoneNumber.test(value) ? true : '請輸入 09 開頭的手機號碼'
-    },
-    submitOrder() {
-      axios.post(`${VITE_API}/api/${VITE_APIPATH}/order`, { "data": this.form })
-        .then(res => {
-          const { orderId } = res.data;
-          toast('top', 'success', '訂單已成立');
-          localStorage.removeItem('pickUp');
-          setTimeout(() => {
-            this.getCart();
-            this.$router.push(`/payment/${orderId}`);
-          }, 1500);
-        })
-        .catch(() => {
-          toast('top', 'error', '表單送出失敗');
-        });
-    },
-  },
-  computed: {
-    ...mapState(cartStore, ['cart']),
-    isFormComplete() {
-      const { user } = this.form;
-      return !user.name || !user.email || !user.tel || !user.address;
-    },
-  },
-  mounted() {
-    const pickUp = localStorage.getItem('pickUp');
-    if (pickUp === '自取') {
-      this.form.user.address = '自取';
-      this.$refs.address.$el.setAttribute('readonly', 'readonly');
-    };
-  },
-  created() {
-    setTimeout(() => this.isLoading = false, 400);
-  },
-}
+const cartStore = useCartStore();
+const { getCart } = cartStore;
+
+function isPhone(value) {
+  const phoneNumber = /^(09)[0-9]{8}$/;
+  return phoneNumber.test(value) ? true : '請輸入 09 開頭的手機號碼';
+};
+
+function submitOrder() {
+  axios.post(`${VITE_API}/api/${VITE_APIPATH}/order`, { "data": form })
+    .then(res => {
+      const { orderId } = res.data;
+      toast('top', 'success', '訂單已成立');
+      localStorage.removeItem('pickUp');
+      setTimeout(() => {
+        getCart();
+        router.push(`/payment/${orderId}`);
+      }, 1500);
+    })
+    .catch(() => {
+      toast('top', 'error', '表單送出失敗');
+    });
+};
+
+const { cart } = storeToRefs(cartStore);
+
+const isFormEmpty = computed(() => {
+  const { user } = form;
+  return !user.name || !user.email || !user.tel || !user.address;
+});
+
+onMounted(() => {
+  const pickUp = localStorage.getItem('pickUp');
+  if (pickUp === '自取') {
+    form.user.address = '自取';
+    address.value.$el.setAttribute('readonly', 'readonly');
+  };
+});
+
+setTimeout(() => isLoading.value = false, 400);
 </script>

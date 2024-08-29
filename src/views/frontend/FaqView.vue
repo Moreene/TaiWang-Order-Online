@@ -62,24 +62,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import BannerComponent from '@/components/BannerComponent.vue';
 
-export default {
-  components: {
-    BannerComponent,
-  },
-  data() {
-    return {
-      activeTab: 'payment',
-    };
-  },
-  methods: {
-    goToTab(tab) {
-      this.activeTab = tab;
-    },
-  },
-}
+const activeTab = ref('payment');
+
+function goToTab(tab) {
+  activeTab.value = tab;
+};
 </script>
 
 <style lang="scss" scoped>

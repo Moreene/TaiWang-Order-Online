@@ -40,33 +40,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { useRouter } from 'vue-router'
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
-
 import { formatDate, formatTime } from '@/methods/date';
 
-export default {
-  components: {
-    ProgessBarComponent,
-  },
-  computed: {
-    orderNum() {
-      return localStorage.getItem('orderNum');
-    },
-    orderDate() {
-      const today = formatDate(new Date());
-      return today;
-    },
-    orderTime() {
-      const time = formatTime(new Date());
-      return time;
-    },
-    backToFront() {
-      localStorage.clear();
-      this.$router.push('/');
-    },
-  },
-}
+const router = useRouter();
+const orderNum = localStorage.getItem('orderNum');
+const orderDate = formatDate(new Date());
+const orderTime = formatTime(new Date());
+
+function backToFront() {
+  localStorage.clear();
+  router.push('/');
+};
 </script>
 
 <style lang="scss" scoped>

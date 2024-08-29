@@ -64,83 +64,76 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch, defineProps, defineEmits, defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { sweetalert } from '@/methods/sweetalert';
 import { formatDate, formatTime } from '@/methods/date';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempCoupon', 'isNew']);
+const emit = defineEmits(['update', 'clearInput','closeModal']);
 
-export default {
-  props: ['tempCoupon', 'isNew'],
-  data() {
-    return {
-      couponModal: null,
-      coupon: {},
-      date: '',
-      time: '',
-      uid: 0,
-    }
-  },
-  methods: {
-    minPercent(value) {
-      if (!value) {
-        return '優惠%數 為必填';
-      } else if (value < 1) {
-        return '優惠%數需大於 1 ';
-      } else {
-        return true;
-      };
-    },
-    createUid() {
-      const dateTime = this.date + ' ' + this.time
-      this.uid = Date.parse(dateTime);
-    },
-    updateCoupon() {
-      this.createUid();
-      const updateData = {
-        ...this.coupon,
-        is_enabled: this.coupon.is_enabled ? 1 : 0,
-        due_date: this.uid,
-      };
+const couponModal = ref(null);
+const coupon = ref({});
+const date = ref('');
+const time = ref('');
+const uid = ref(0);
+const form = ref(null);
 
-      let url = `${VITE_API}/api/${VITE_APIPATH}/admin/coupon/${updateData.id}`;
-      let http = 'put';
-      if (this.isNew) {
-        url = `${VITE_API}/api/${VITE_APIPATH}/admin/coupon`;
-        http = 'post'
-      };
-      axios[http](url, { data: updateData })
-        .then(res => {
-          sweetalert('success', res.data.message);
-          this.$emit('update');
-          this.$emit('clearInput');
-          this.couponModal.hide();
-        }).catch(err => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-    resetForm() {
-      this.$refs.form.resetForm();
-    },
-  },
-  watch: {
-    tempCoupon: {
-      handler(newVal) {
-        this.date = formatDate(newVal.due_date);
-        this.time = formatTime(newVal.due_date);
-        this.coupon = newVal;
-      },
-      deep: true
-    },
-  },
-  mounted() {
-    this.couponModal = new Modal(this.$refs.couponModal, {
-      keyboard: false,
-      backdrop: 'static',
+function minPercent(value) {
+  if (!value) {
+    return '優惠%數 為必填';
+  } else if (value < 1) {
+    return '優惠%數需大於 1 ';
+  } else {
+    return true;
+  };
+};
+
+function createUid() {
+  const dateTime = date.value + ' ' + time.value
+  uid.value = Date.parse(dateTime);
+};
+
+function updateCoupon() {
+  createUid();
+  const updateData = {
+    ...coupon.value,
+    is_enabled: coupon.value.is_enabled ? 1 : 0,
+    due_date: uid.value,
+  };
+  let url = `${VITE_API}/api/${VITE_APIPATH}/admin/coupon/${updateData.id}`;
+  let http = 'put';
+  if (props.isNew) {
+    url = `${VITE_API}/api/${VITE_APIPATH}/admin/coupon`;
+    http = 'post';
+  };
+  axios[http](url, { data: updateData })
+    .then(res => {
+      sweetalert('success', res.data.message);
+      emit('update');
+      emit('clearInput');
+      emit('closeModal');
+    })
+    .catch(err => {
+      console.log(err)
+      sweetalert('error', err.response.data.message);
     });
-  },
-}
+};
+
+function resetForm() {
+  form.value.resetForm();
+};
+
+watch(() => props.tempCoupon, (newVal) => {
+  date.value = formatDate(newVal.due_date);
+  time.value = formatTime(newVal.due_date);
+  Object.assign(coupon.value, newVal);
+}, { deep: true });
+
+defineExpose({
+  couponModal,
+  resetForm
+});
 </script>

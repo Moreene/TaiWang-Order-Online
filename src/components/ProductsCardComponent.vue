@@ -15,18 +15,16 @@
   </a>
 </template>
 
-<script>
-import { mapActions } from 'pinia';
-import productStore from '@/stores/productStore.js';
-import cartStore from '@/stores/cartStore.js';
+<script setup>
+import { defineProps } from 'vue';
+import { useProductStore } from '@/stores/useProductStore.js';
+import { useCartStore } from '@/stores/useCartStore.js';
 
-export default {
-  props: ['item'],
-  methods: {
-    ...mapActions(productStore, ['getProduct']),
-    ...mapActions(cartStore, ['addCart']),
-  },
-}
+const props = defineProps(['item']);
+const productStore = useProductStore();
+const { getProduct } = productStore;
+const cartStore = useCartStore();
+const { addCart } = cartStore;
 </script>
 
 <style lang="scss" scoped>

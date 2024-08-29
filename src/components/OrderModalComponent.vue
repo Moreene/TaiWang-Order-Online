@@ -80,55 +80,46 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch, defineProps, defineEmits, defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { formatDate } from '@/methods/date';
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempOrder']);
+const emit = defineEmits(['updateOrder', 'clearInput','closeModal']);
+const order = ref({});
+const editOrderModal = ref(null);
 
-export default {
-  props: ["tempOrder"],
-  data() {
-    return {
-      order: {},
-      editOrderModal: null,
-    };
-  },
-  methods: {
-    updateOrder() {
-      axios.put(`${VITE_API}/api/${VITE_APIPATH}/admin/order/${this.tempOrder.id}`, { "data": this.order })
-        .then(res => {
-          sweetalert('success', res.data.message);
-          this.$emit('updateOrder');
-          this.$emit('clearInput');
-          this.editOrderModal.hide();
-        })
-        .catch(err => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-    resetForm() {
-      this.$refs.form.resetForm();
-    },
-  },
-  computed: {
-    date() {
-      return formatDate(this.order.paid_date * 1000);
-    },
-  },
-  watch: {
-    tempOrder() {
-      this.order = JSON.parse(JSON.stringify(this.tempOrder));
-    },
-  },
-  mounted() {
-    this.editOrderModal = new Modal(this.$refs.editOrderModal, {
-      keyboard: false,
-      backdrop: 'static'
+function updateOrder() {
+  axios.put(`${VITE_API}/api/${VITE_APIPATH}/admin/order/${props.tempOrder.id}`, { "data": order.value })
+    .then(res => {
+      sweetalert('success', res.data.message);
+      emit('updateOrder');
+      emit('clearInput');
+      emit('closeModal');
+    })
+    .catch(err => {
+      sweetalert('error', err.response.data.message);
     });
-  },
 };
+
+const form = ref(null);
+function resetForm() {
+  form.value.resetForm();
+};
+
+const date = computed(() => {
+  return formatDate(order.value.paid_date * 1000);
+});
+
+watch(() => props.tempOrder, () => {
+  order.value = JSON.parse(JSON.stringify(props.tempOrder));
+});
+
+defineExpose({
+  editOrderModal,
+  resetForm
+});
 </script>

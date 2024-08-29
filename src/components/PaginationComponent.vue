@@ -14,51 +14,48 @@
   </nav>
 </template>
 
-<script>
-export default {
-  props: ['products'],
-  data() {
-    return {
-      allData: [],
-      pageSize: 12,
-      currentPage: 0
-    }
-  },
-  methods: {
-    updateShowData() {
-      const totalPage = [];
-      for (let i = 0; i < this.pageNum; i++) {
-        totalPage[i] = this.allData.slice(this.pageSize * i, this.pageSize * (i + 1));
-      };
-      this.$emit('updateProducts', (totalPage[this.currentPage]));
-    },
-    goToPage(targetPage) {
-      // 檢查索引是否在正確範圍內
-      if (targetPage >= 0 && targetPage < this.pageNum) {
-        this.currentPage = targetPage;
-        window.scrollTo(0, 0);
-        this.updateShowData();
-      }
-    },
-    resetPage() {
-      this.currentPage = 0;
-      this.updateShowData();
-    },
-  },
-  computed: {
-    pageNum() {
-      return Math.ceil(this.allData.length / this.pageSize);
-    }
-  },
-  watch: {
-    // 監視路由變化，取得對應tab篩選後的最新商品資料
-    products: {
-      handler(newVal) {
-        this.allData = newVal;
-        this.updateShowData();
-      },
-      immediate: true
-    }
-  },
-}
+<script setup>
+import { ref, computed, watch, defineProps, defineEmits, defineExpose } from 'vue';
+const props = defineProps(['products']);
+const emit = defineEmits(['updateProducts']);
+
+const allData = ref([]);
+const pageSize = ref(12);
+const currentPage = ref(0);
+
+const pageNum = computed(() => {
+  return Math.ceil(allData.value.length / pageSize.value);
+});
+
+function updateShowData() {
+  const totalPage = [];
+  for (let i = 0; i < pageNum.value; i++) {
+    totalPage[i] = allData.value.slice(pageSize.value * i, pageSize.value * (i + 1));
+  }
+  emit('updateProducts', totalPage[currentPage.value]);
+};
+
+function goToPage(targetPage) {
+  // 檢查索引是否在正確範圍內
+  if (targetPage >= 0 && targetPage < pageNum.value) {
+    currentPage.value = targetPage;
+    window.scrollTo(0, 0);
+    updateShowData();
+  };
+};
+
+function resetPage() {
+  currentPage.value = 0;
+  updateShowData();
+};
+
+// 監視路由變化，取得對應tab篩選後的最新商品資料
+watch(() => props.products, (newVal) => {
+  allData.value = newVal;
+  updateShowData();
+}, { immediate: true });
+
+defineExpose({
+  resetPage,
+});
 </script>
