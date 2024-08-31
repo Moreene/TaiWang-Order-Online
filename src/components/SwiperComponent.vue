@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, defineProps, onMounted } from 'vue';
+import { ref, defineProps, onMounted } from 'vue';
 import { useProductStore } from '@/stores/useProductStore.js';
 import { useCartStore } from '@/stores/useCartStore.js';
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -50,7 +50,7 @@ const navigation = ref({
   nextEl: '.swiper-button-next',
   prevEl: '.swiper-button-prev',
 });
-const swiperOptions = reactive({
+const swiperOptions = ref({
   breakpoints: {
     1200: {
       slidesPerView: 4

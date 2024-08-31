@@ -27,40 +27,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, defineProps, defineEmits,defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempProduct']);
+const emit = defineEmits(['update', 'clearInput','closeModal']);
+const delProductModal = ref(null);
 
-export default {
-  props: ['tempProduct'],
-  data() {
-    return {
-      delProductModal: null,
-    }
-  },
-  methods: {
-    delProduct() {
-      axios.delete(`${VITE_API}/api/${VITE_APIPATH}/admin/product/${this.tempProduct.id}`)
-        .then(res => {
-          sweetalert('success', res.data.message);
-          this.$emit('update');
-          this.$emit('clearInput');
-          this.delProductModal.hide();
-        })
-        .catch(err => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-  },
-  mounted() {
-    this.delProductModal = new Modal(this.$refs.delProductModal, {
-      keyboard: false,
-      backdrop: 'static',
+function delProduct() {
+  axios.delete(`${VITE_API}/api/${VITE_APIPATH}/admin/product/${props.tempProduct.id}`)
+    .then(res => {
+      sweetalert('success', res.data.message);
+      emit('update');
+      emit('clearInput');
+      emit('closeModal');
+    })
+    .catch(err => {
+      sweetalert('error', err.response.data.message);
     });
-  },
-}
+};
+
+defineExpose({
+  delProductModal,
+})
 </script>

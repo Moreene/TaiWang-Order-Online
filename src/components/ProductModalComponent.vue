@@ -185,70 +185,62 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch, defineProps, defineEmits,defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempProduct', 'isNew']);
+const emit = defineEmits(['update', 'clearInput','closeModal']);
+const productModal = ref(null);
+const product = ref({});
+const ingredient = ref({
+  meat: ['雞肉', '雞腿', '豬肉', '松阪豬', '豬肋骨'],
+  seafood: ['白蝦', '草蝦', '蛤蜊', '花枝', '中卷', '花枝漿', '鱸魚'],
+  vegetable: ['辣椒', '大蒜', '薑', ' 香茅', '香菜', '紅蔥頭', '泰國茄子', '檸檬', '小番茄', '草菇', '蘑菇', '乾檸檬葉', '青木瓜', '玉米筍', '洋蔥', '小黃瓜', '青蔥', '青椒', '花椰菜', '胡蘿蔔', '紅甜椒', '高麗菜', '四季豆', '空心菜', '長豆', '芋頭', '地瓜', '椰子', '椰蓉肉', '紅石榴', '香蕉', '紅毛丹', '菠蘿蜜'],
+  seasoning: ['糖', '魚露', '泰國蠔油', '乾蝦米', '蝦膏', '蝦醬', '米酒', '玉米粉', '白胡椒粉', '麵包粉', '花生'],
+  rice: ['紅藜米', '茉莉香米'],
+  others: ['椰奶', '椰漿', '牛奶', '煉乳', '淡奶', '麵粉', '鹹蛋', '蛋', '奶油', '錫蘭紅茶茶葉', '綠茶', '泰國神童牌紅糖水', '西米露'],
+});
 
-export default {
-  props: ['tempProduct', 'isNew'],
-  data() {
-    return {
-      productModal: null,
-      ingredient: {
-        meat: ['雞肉', '雞腿', '豬肉', '松阪豬', '豬肋骨'],
-        seafood: ['白蝦', '草蝦', '蛤蜊', '花枝', '中卷', '花枝漿', '鱸魚'],
-        vegetable: ['辣椒', '大蒜', '薑', ' 香茅', '香菜', '紅蔥頭', '泰國茄子', '檸檬', '小番茄', '草菇', '蘑菇', '乾檸檬葉', '青木瓜', '玉米筍', '洋蔥', '小黃瓜', '青蔥', '青椒', '花椰菜', '胡蘿蔔', '紅甜椒', '高麗菜', '四季豆', '空心菜', '長豆', '芋頭', '地瓜', '椰子', '椰蓉肉', '紅石榴', '香蕉', '紅毛丹', '菠蘿蜜'],
-        seasoning: ['糖', '魚露', '泰國蠔油', '乾蝦米', '蝦膏', '蝦醬', '米酒', '玉米粉', '白胡椒粉', '麵包粉', '花生'],
-        rice: ['紅藜米', '茉莉香米'],
-        others: ['椰奶', '椰漿', '牛奶', '煉乳', '淡奶', '麵粉', '鹹蛋', '蛋', '奶油', '錫蘭紅茶茶葉', '綠茶', '泰國神童牌紅糖水', '西米露'],
-      },
-      product: {},
-    }
-  },
-  methods: {
-    updateProduct() {
-      const updateData = {
-        ...this.product,
-        hot: this.product.hot === true ? 1 : 0,
-        recommendation: this.product.recommendation === true ? 1 : 0,
-        is_enabled: this.product.is_enabled === true ? 1 : 0,
-      };
-      let url = `${VITE_API}/api/${VITE_APIPATH}/admin/product/${updateData.id}`;
-      let http = 'put';
-      if (this.isNew) {
-        url = `${VITE_API}/api/${VITE_APIPATH}/admin/product`;
-        http = 'post'
-      };
-      axios[http](url, { data: updateData })
-        .then(res => {
-          sweetalert('success', res.data.message);
-          this.$emit('update');
-          this.$emit('clearInput');
-          this.productModal.hide();
-        }).catch(err => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-    resetForm() {
-      this.$refs.form.resetForm();
-    }
-  },
-  watch: {
-    tempProduct() {
-      this.product = this.tempProduct;
-    },
-  },
-  mounted() {
-    this.productModal = new Modal(this.$refs.productModal, {
-      keyboard: false,
-      backdrop: 'static'
+function updateProduct() {
+  const updateData = {
+    ...product.value,
+    hot: product.value.hot === true ? 1 : 0,
+    recommendation: product.value.recommendation === true ? 1 : 0,
+    is_enabled: product.value.is_enabled === true ? 1 : 0,
+  };
+  let url = `${VITE_API}/api/${VITE_APIPATH}/admin/product/${updateData.id}`;
+  let http = 'put';
+  if (props.isNew) {
+    url = `${VITE_API}/api/${VITE_APIPATH}/admin/product`;
+    http = 'post'
+  };
+  axios[http](url, { data: updateData })
+    .then(res => {
+      sweetalert('success', res.data.message);
+      emit('update');
+      emit('clearInput');
+      emit('closeModal');
+    }).catch(err => {
+      sweetalert('error', err.response.data.message);
     });
-  },
-}
+};
+
+const form = ref(null);
+function resetForm() {
+  form.value.resetForm();
+};
+
+watch(() => props.tempProduct, (newVal) => {
+  product.value = {...newVal};
+});
+
+defineExpose({
+  productModal,
+  resetForm
+})
 </script>
 
 <style scoped>

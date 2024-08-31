@@ -90,83 +90,80 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch, defineProps, defineEmits, defineExpose } from 'vue';
 import axios from 'axios';
-import Modal from 'bootstrap/js/dist/modal';
-
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
+const props = defineProps(['tempProduct']);
+const emit = defineEmits(['update', 'clearInput','closeModal']);
+const imageModal = ref(null);
+const product = ref({});
+const url = ref('');
+const fileInput = ref(null);
 
-export default {
-  props: ['tempProduct'],
-  data() {
-    return {
-      imageModal: null,
-      product: {},
-      url: '',
-    }
-  },
-  methods: {
-    uploadImg(event) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file-to-upload", file);
-      axios.post(`${VITE_API}/api/${VITE_APIPATH}/admin/upload`, formData)
-        .then(res => {
-          this.url = res.data.imageUrl;
-          this.$refs.fileInput.value = '';
-        })
-        .catch(() => {
-          sweetalert('error', '圖片上傳失敗');
-        });
-    },
-    copyUrl() {
-      navigator.clipboard.writeText(this.$refs.imgUrl.value)
-        .then(() => {
-          sweetalert('success', '已複製圖片Url');
-        })
-        .catch(() => {
-          sweetalert('error', '複製圖片Url失敗');
-        });
-    },
-    updateProduct() {
-      const updateData = {
-        ...this.product,
-        imageUrl: this.product.imageUrl,
-        imagesUrl: this.product.imagesUrl,
-        hot: this.product.hot === true ? 1 : 0,
-        recommendation: this.product.recommendation === true ? 1 : 0,
-        is_enabled: this.product.is_enabled === true ? 1 : 0,
-      };
-      axios.put(`${VITE_API}/api/${VITE_APIPATH}/admin/product/${updateData.id}`, { data: updateData })
-        .then(res => {
-          sweetalert('success', res.data.message);
-          this.$emit('update');
-          this.clearInput();
-          this.imageModal.hide();
-        }).catch(err => {
-          sweetalert('error', err.response.data.message);
-        });
-    },
-    clearInput() {
-      this.url = '';
-      this.$emit('clearInput')
-    },
-    resetForm() {
-      this.$refs.form.resetForm();
-    },
-  },
-  watch: {
-    tempProduct() {
-      this.product = this.tempProduct;
-    },
-  },
-  mounted() {
-    this.imageModal = new Modal(this.$refs.imageModal, {
-      keyboard: false,
-      backdrop: 'static',
+function uploadImg(event) {
+  const file = event.target.files[0];
+  const formData = new FormData();
+  formData.append("file-to-upload", file);
+  axios.post(`${VITE_API}/api/${VITE_APIPATH}/admin/upload`, formData)
+    .then(res => {
+      url.value = res.data.imageUrl;
+      fileInput.value.value = '';
+    })
+    .catch(() => {
+      sweetalert('error', '圖片上傳失敗');
     });
-  },
-}
+};
+
+const imgUrl = ref(null);
+function copyUrl() {
+  navigator.clipboard.writeText(imgUrl.value.value)
+    .then(() => {
+      sweetalert('success', '已複製圖片Url');
+    })
+    .catch(() => {
+      sweetalert('error', '複製圖片Url失敗');
+    });
+};
+
+function updateProduct() {
+  const updateData = {
+    ...product.value,
+    imageUrl: product.value.imageUrl,
+    imagesUrl: product.value.imagesUrl,
+    hot: product.value.hot === true ? 1 : 0,
+    recommendation: product.value.recommendation === true ? 1 : 0,
+    is_enabled: product.value.is_enabled === true ? 1 : 0,
+  };
+  axios.put(`${VITE_API}/api/${VITE_APIPATH}/admin/product/${updateData.id}`, { data: updateData })
+    .then(res => {
+      sweetalert('success', res.data.message);
+      emit('update');
+      clearInput();
+      emit('closeModal');
+    }).catch(err => {
+      sweetalert('error', err.response.data.message);
+    });
+};
+
+function clearInput() {
+  url.value = '';
+  emit('clearInput');
+};
+
+const form = ref(null);
+function resetForm() {
+  form.value.resetForm();
+};
+
+watch(() => props.tempProduct, (newVal) => {
+  product.value = {...newVal};
+});
+
+defineExpose({
+  imageModal,
+  resetForm
+});
 </script>
