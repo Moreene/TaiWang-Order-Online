@@ -95,8 +95,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { storeToRefs } from 'pinia';
 import { useProductStore } from '@/stores/useProductStore.js';
 import { useCategoryStore } from '@/stores/useCategoryStore.js';
 import SwiperComponent from '@/components/SwiperComponent.vue';

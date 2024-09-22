@@ -1,7 +1,4 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import axios from 'axios';
-import router from '../router';
+import router from '@/router';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
 

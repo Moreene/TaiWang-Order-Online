@@ -59,9 +59,6 @@
 </template>
 
 <script setup>
-import { ref, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
 import { useProductStore } from '@/stores/useProductStore.js';
 import { useCategoryStore } from '@/stores/useCategoryStore.js';
 import BannerComponent from '@/components/BannerComponent.vue';

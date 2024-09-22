@@ -26,9 +26,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
 import { toast } from '@/methods/sweetalert';
 
 const { VITE_API } = import.meta.env;

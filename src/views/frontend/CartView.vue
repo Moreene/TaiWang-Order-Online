@@ -147,10 +147,6 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useCartStore } from '@/stores/useCartStore.js';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';

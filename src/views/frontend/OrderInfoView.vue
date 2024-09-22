@@ -83,10 +83,6 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { ref, reactive, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/useCartStore.js';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';

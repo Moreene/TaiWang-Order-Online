@@ -70,8 +70,6 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import CouponModalComponent from '@/components/CouponModalComponent.vue';
 import DelCouponModalComponent from '@/components/DelCouponModalComponent.vue';

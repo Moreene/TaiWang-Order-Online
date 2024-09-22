@@ -58,6 +58,7 @@
 * Vee-validate v4.12.4
 * Vue-loading-overlay v6.0.4
 * Vue3-google-map v0.19.0
+* unplugin-auto-import ^0.18.3
 
 ## 聯絡
 gmail：moreenewu@gmail.com

@@ -18,6 +18,7 @@
     "pinia": "^2.1.7",
     "sweetalert2": "^11.10.5",
     "swiper": "^11.0.5",
+    "unplugin-auto-import": "^0.18.3",
     "vee-validate": "^4.12.4",
     "vue": "^3.3.11",
     "vue-loading-overlay": "^6.0.4",

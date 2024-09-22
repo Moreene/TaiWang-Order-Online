@@ -74,8 +74,6 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import axios from 'axios';
 import OrderModalComponent from '@/components/OrderModalComponent.vue';
 import DelOrderModalComponent from '@/components/DelOrderModalComponent.vue';
 import AdminPaginationComponent from '@/components/AdminPaginationComponent.vue';

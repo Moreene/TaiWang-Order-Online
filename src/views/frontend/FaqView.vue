@@ -63,7 +63,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import BannerComponent from '@/components/BannerComponent.vue';
 
 const activeTab = ref('payment');

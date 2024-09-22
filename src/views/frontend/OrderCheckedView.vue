@@ -41,7 +41,6 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 import { formatDate, formatTime } from '@/methods/date';
 

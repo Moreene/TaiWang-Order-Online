@@ -9,9 +9,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
 const countdown = ref(5);
 const router = useRouter();
 

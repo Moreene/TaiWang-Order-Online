@@ -113,9 +113,6 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
-import { storeToRefs } from 'pinia';
 import { useProductStore } from '@/stores/useProductStore.js';
 import { useCartStore } from '@/stores/useCartStore.js';
 import SwiperComponent from '@/components/SwiperComponent.vue';

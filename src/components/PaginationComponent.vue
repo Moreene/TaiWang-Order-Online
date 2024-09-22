@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, defineExpose } from 'vue';
 const props = defineProps(['products']);
 const emit = defineEmits(['updateProducts']);
 

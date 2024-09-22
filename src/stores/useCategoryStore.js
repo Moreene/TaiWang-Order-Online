@@ -1,6 +1,3 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-
 export const useCategoryStore = defineStore('category', () => {
   const categories = ref([
     { name: '主廚推薦', path: 'recommendation', imageUrl: 'https://www.thaij.com/Public/Admin/202111175018.jpg' },

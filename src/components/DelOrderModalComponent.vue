@@ -26,8 +26,6 @@
 </template>
 
 <script setup>
-import { ref, defineExpose } from 'vue';
-import axios from 'axios';
 import { sweetalert } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;

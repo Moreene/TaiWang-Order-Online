@@ -63,7 +63,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
 import BannerComponent from '@/components/BannerComponent.vue';
 import MapComponent from '@/components/MapComponent.vue';
 import { toast } from '@/methods/sweetalert';

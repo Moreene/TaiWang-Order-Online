@@ -28,10 +28,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue';
-import { useRoute } from 'vue-router';
 const route = useRoute();
-
 const progessCart = ref(null);
 const progessInfo = ref(null);
 const progessPayment = ref(null);

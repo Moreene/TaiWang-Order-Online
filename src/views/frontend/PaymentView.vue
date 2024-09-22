@@ -120,10 +120,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
 import ProgessBarComponent from '@/components/ProgessBarComponent.vue';
 import LoadingComponent from '@/components/LoadingComponent.vue';
 import { toast } from '@/methods/sweetalert';

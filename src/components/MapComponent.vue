@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { GoogleMap, Marker, InfoWindow } from 'vue3-google-map';
 
 const apiKey = import.meta.env.VITE_MAP;

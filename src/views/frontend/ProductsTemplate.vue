@@ -21,8 +21,6 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps } from 'vue';
-import { storeToRefs } from 'pinia';
 import { useProductStore } from '@/stores/useProductStore.js';
 import ProductsCardComponent from '@/components/ProductsCardComponent.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';

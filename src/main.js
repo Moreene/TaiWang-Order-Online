@@ -36,6 +36,6 @@ app.use(router);
 app.component('VField', Field);
 app.component('VForm', Form);
 app.component('ErrorMessage', ErrorMessage);
-app.component('VueLoading', Loading)
+app.component('VueLoading', Loading);
 
 app.mount('#app');

@@ -36,9 +36,6 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import axios from 'axios';
-
 const { VITE_API } = import.meta.env;
 const router = useRouter();
 

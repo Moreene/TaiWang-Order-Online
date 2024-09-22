@@ -62,9 +62,7 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/useCartStore.js';
-import { storeToRefs } from 'pinia';
 
 const router = useRouter();
 const cartStore = useCartStore();

@@ -68,9 +68,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/useCartStore.js';
 import CartComponent from '@/components/CartComponent.vue';
 

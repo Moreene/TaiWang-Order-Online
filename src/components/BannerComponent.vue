@@ -16,9 +16,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
-
 const img = ref('');
 const route = useRoute();
 img.value = route.meta.BannerImage;

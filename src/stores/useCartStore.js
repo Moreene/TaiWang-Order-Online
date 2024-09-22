@@ -1,6 +1,3 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import axios from 'axios';
 import { toast } from '@/methods/sweetalert';
 
 const { VITE_API, VITE_APIPATH } = import.meta.env;
