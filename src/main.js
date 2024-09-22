@@ -25,8 +25,8 @@ configure({
 });
 setLocale('zh_TW');
 
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 const app = createApp(App);
 

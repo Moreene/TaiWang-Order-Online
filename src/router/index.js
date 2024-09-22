@@ -1,22 +1,22 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-const FrontView = () => import('../views/FrontView.vue')
-const HomeView = () => import('../views/frontend/HomeView.vue')
-const AboutUsView = () => import('../views/frontend/AboutUsView.vue')
-const FaqView = () => import('../views/frontend/FaqView.vue')
-const ContactView = () => import('../views/frontend/ContactView.vue')
-const ProductsView = () => import('../views/frontend/ProductsView.vue')
-const ProductsTemplate = () => import('../views/frontend/ProductsTemplate.vue')
-const ProductDetailView = () => import('../views/frontend/ProductDetailView.vue')
-const CartView = () => import('../views/frontend/CartView.vue')
-const OrderInfoView = () => import('../views/frontend/OrderInfoView.vue')
-const PaymentView = () => import('../views/frontend/PaymentView.vue')
-const OrderCheckedView = () => import('../views/frontend/OrderCheckedView.vue')
-const AdminLoginView = () => import('../views/backend/AdminLoginView.vue')
-const AdminView = () => import('../views/AdminView.vue')
-const AdminProductsView = () => import('../views/backend/AdminProductsView.vue')
-const AdminOrdersView = () => import('../views/backend/AdminOrdersView.vue')
-const AdminCouponView = () => import('../views/backend/AdminCouponView.vue')
-const ErrorPageView = () => import('../views/ErrorPageView.vue')
+import { createRouter, createWebHashHistory } from 'vue-router';
+const FrontView = () => import('../views/FrontView.vue');
+const HomeView = () => import('../views/frontend/HomeView.vue');
+const AboutUsView = () => import('../views/frontend/AboutUsView.vue');
+const FaqView = () => import('../views/frontend/FaqView.vue');
+const ContactView = () => import('../views/frontend/ContactView.vue');
+const ProductsView = () => import('../views/frontend/ProductsView.vue');
+const ProductsTemplate = () => import('../views/frontend/ProductsTemplate.vue');
+const ProductDetailView = () => import('../views/frontend/ProductDetailView.vue');
+const CartView = () => import('../views/frontend/CartView.vue');
+const OrderInfoView = () => import('../views/frontend/OrderInfoView.vue');
+const PaymentView = () => import('../views/frontend/PaymentView.vue');
+const OrderCheckedView = () => import('../views/frontend/OrderCheckedView.vue');
+const AdminLoginView = () => import('../views/backend/AdminLoginView.vue');
+const AdminView = () => import('../views/AdminView.vue');
+const AdminProductsView = () => import('../views/backend/AdminProductsView.vue');
+const AdminOrdersView = () => import('../views/backend/AdminOrdersView.vue');
+const AdminCouponView = () => import('../views/backend/AdminCouponView.vue');
+const ErrorPageView = () => import('../views/ErrorPageView.vue');
 
 const router = createRouter({
   history: createWebHashHistory(),

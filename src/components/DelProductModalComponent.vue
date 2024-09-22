@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits,defineExpose } from 'vue';
+import { ref, defineExpose } from 'vue';
 import axios from 'axios';
 import { sweetalert } from '@/methods/sweetalert';
 

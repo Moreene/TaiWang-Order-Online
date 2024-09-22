@@ -186,7 +186,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits,defineExpose } from 'vue';
+import { ref, watch, defineExpose } from 'vue';
 import axios from 'axios';
 import { sweetalert } from '@/methods/sweetalert';
 

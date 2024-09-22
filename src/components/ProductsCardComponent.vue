@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 import { useProductStore } from '@/stores/useProductStore.js';
 import { useCartStore } from '@/stores/useCartStore.js';
 

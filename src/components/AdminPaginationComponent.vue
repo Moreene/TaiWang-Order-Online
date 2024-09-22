@@ -20,8 +20,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-
 const props = defineProps(['pagination']);
 const emit = defineEmits(['emit-pages']);
 
