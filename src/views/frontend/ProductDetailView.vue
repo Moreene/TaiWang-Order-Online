@@ -136,8 +136,10 @@ function showImage(id) {
 };
 
 function getFilterData() {
-  filterData.value = products.value.filter(item => item.category === productDetail.value.category);
-};
+  filterData.value = products.value.filter(item =>
+  item.category === productDetail.value.category &&
+  item.title !== productDetail.value.title
+)};
 
 watch([products, productDetail], () => {
   getFilterData();
